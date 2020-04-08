@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 });
 
+
+//create function to query database be lookup code
+
 function findClickedListItemElement(clickedTarget) {
 	if (clickedTarget.tagName.toLowerCase() === "li") {
 		return clickedTarget;
