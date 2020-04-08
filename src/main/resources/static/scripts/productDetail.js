@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 });
 
+//create function to query database be lookup code
+
 function productLookupCodeKeypress(event) {
 	if (event.which !== 13) { // Enter key
 		return;
