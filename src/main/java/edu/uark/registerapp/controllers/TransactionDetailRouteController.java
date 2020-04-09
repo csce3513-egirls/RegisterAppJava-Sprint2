@@ -20,6 +20,7 @@ import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
+import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.enums.EmployeeClassification;
 
 @Controller
@@ -36,9 +37,18 @@ public class TransactionDetailRouteController extends BaseRouteController {
             return this.buildInvalidSessionResponse();
         } 
 
+        final ModelAndView modelAndView =
+        this.setErrorMessageFromQueryString(
+            new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName()),
+            queryParameters);
+        return modelAndView;
         
 
-        return null;
-    }
+        
     
+    }
+
+
+    
+
 }
