@@ -17,15 +17,18 @@
 		<h1 class="primary-message">Shopping Cart</h1>
 	</div>
 
-	<div class="main">
-		<p>Total: </p>
-	</div>
-	
-	<div class="transactionsActionsWrapper">
-		<br />
-		<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
-		<br /><br />
-		<button id="checkOutButton" type="button" class="action">Check Out</button>
+
+	<div id="main" class="main">
+		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
+		</div>
+
+		<div class="transactionsActionsWrapper">
+			<br />
+			<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
+			<br /><br />
+			<button id="checkOutButton" type="button" class="action">Check Out</button>
+		</div>
 	</div>
     
 </body>
