@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //create function to query database be lookup code
+function searchLookup()
+{
+	 var sql = "SELECT lookupcode from product LIMIT 1";
+
+	 //if (!result.isValid)
+	 //{
+	//	 test.fail("Entry not found");
+	 //}
+}
 
 function findClickedListItemElement(clickedTarget) {
 	if (clickedTarget.tagName.toLowerCase() === "li") {
