@@ -41,13 +41,6 @@ public class TransactionDetailRouteController extends BaseRouteController {
             new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName()),
             queryParameters);
         return modelAndView;
-        
-
-        
-    
     }
-
-
-    
 
 }
