@@ -23,6 +23,35 @@
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
+
+		<div class="inputContent">
+			<table id="transactionDetails">
+				<tbody>
+					<tr>
+						<td class="label">Product Lookup Code:</td>
+						<td>
+							<input id="transactionLookupCode" type="text"/><!-- th:value="${!transaction.isEmpty} ? ${transaction.lookupCode} : ''" class="update" />-->
+						</td>
+					</tr>
+					
+						
+				<!--	<tr th:class="${employee.isInitialEmployee} ? hidden : ''">
+						<td class="label">Employee Type:</td>
+						<td>
+							<select id="employeeType" class="select">
+								<option th:each="employeeType : ${employeeTypes}" th:value="${employeeType.classification}" th:text="${employeeType.displayLabel}" th:selected="${employee.classification == employeeType.classification}"></option>
+							</select>
+						</td>
+					</tr>-->
+				</tbody>
+			</table>
+		</div>
+
+		<div class="transactionsActionsWrapper" th:classappend="not ${#strings.isEmpty(errorMessage)} ? hidden : ''">
+			<br />
+			<button id="searchButton" type="button" class="action">Search</button>
+		</div>
+
 		<div class="transactionsActionsWrapper">
 			<br />
 			<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
@@ -30,6 +59,10 @@
 			<button id="checkOutButton" type="button" class="action">Check Out</button>
 		</div>
 	</div>
+
+	<div>
+		<div th:class="Transaction">
+	</div>>	
     
 </body>
 

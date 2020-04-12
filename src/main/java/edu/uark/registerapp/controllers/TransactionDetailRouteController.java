@@ -16,25 +16,37 @@ import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import edu.uark.registerapp.controllers.enums.QueryParameterNames;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
+import edu.uark.registerapp.models.api.Product;
+import edu.uark.registerapp.models.entities.ActiveUserEntity;
+import edu.uark.registerapp.models.entities.TransactionEntity;
+import edu.uark.registerapp.models.enums.EmployeeClassification;
 
 @Controller
 @RequestMapping(value = "/transactionDetail")
 public class TransactionDetailRouteController extends BaseRouteController {
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showTransaction(
-		@RequestParam final Map<String, String> queryParameters
-	) {
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView start(
+        @RequestParam final Map<String, String> queryParameters,
+		final HttpServletRequest request
+    ) {
+        
+        final Optional<ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
+        if(!activeUserEntity.isPresent()){
+            return this.buildInvalidSessionResponse();
+        } 
 
-		try {
-		} catch (NotFoundException e) {
-			return new ModelAndView(
-				REDIRECT_PREPEND.concat(
-					ViewNames.TRANSACTION_DETAIL.getRoute()));
-		}
+        final ModelAndView modelAndView =
+        this.setErrorMessageFromQueryString(
+            new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName()),
+            queryParameters);
+        return modelAndView;
+        
 
-		ModelAndView modelAndView =
-				new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName());
+        
+    
+    }
 
-		return modelAndView;
-	}
+
+    
+
 }
