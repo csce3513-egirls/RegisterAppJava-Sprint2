@@ -43,7 +43,7 @@ public class TransactionEntryEntity {
     @Column(name="productid")
     private UUID productId;
 
-    public UUID geProductId(){
+    public UUID getProductId(){
         return this.productId;
     }
 
@@ -55,7 +55,7 @@ public class TransactionEntryEntity {
     @Column(name="quantity")
     private double quantity;
 
-    public double geQuantityId(){
+    public double getQuantityId(){
         return this.quantity;
     }
 
@@ -67,7 +67,7 @@ public class TransactionEntryEntity {
     @Column(name="price")
     private long price;
 
-    public long gePriceId(){
+    public long getPriceId(){
         return this.price;
     }
 
@@ -83,6 +83,18 @@ public class TransactionEntryEntity {
 		return this.createdOn;
     }
 
+    public TransactionEntry synchronize(final TransactionEntry apiTransactionEntry) {
+        this.setTransactionId(apiTransactionEntry.getTransactionId());
+        this.setProductId(apiTransactionEntry.getProductId());
+        this.setQuantity(apiTransactionEntry.getQuantity());
+        this.setPrice(apiTransactionEntry.getPrice());
+
+        apiTransactionEntry.setId(this.getId());
+        apiTransactionEntry.setCreatedOn(this.getCreatedOn());
+
+        return apiTransactionEntry;
+    }
+
     public TransactionEntryEntity(){
         this.id = new UUID(0, 0);
         this.transactionId = new UUID(0, 0);
@@ -90,7 +102,4 @@ public class TransactionEntryEntity {
         this.quantity = -1.0;
         this.price = -1;
     }
-
-    
-
 }

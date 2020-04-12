@@ -16,7 +16,6 @@ import org.hibernate.annotations.GenerationTime;
 
 import edu.uark.registerapp.models.api.Transaction;
 
-///TODO: might need to add synchronization function like in ProductEntity
 @Entity
 @Table(name="transaction")
 public class TransactionEntity {
@@ -103,7 +102,4 @@ public class TransactionEntity {
         this.transactionType = -1;
         this.transactionReferenceId = new UUID(0, 0);
     }
-
-
-
 }
