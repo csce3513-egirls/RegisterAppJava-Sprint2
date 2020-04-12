@@ -87,8 +87,8 @@ public class Transaction extends ApiResponse {
         this.id = transactionEntity.getId();
         this.cashierId = transactionEntity.getCashierId();
         this.total = transactionEntity.getTotal();
-        this.transactionType = transactionEntity.getTransactionType();
-        this.transactionReferenceId = transactionEntity.getTransactionReferenceId();
+        this.transactionType = transactionEntity.getType();
+        this.transactionReferenceId = transactionEntity.getReferenceId();
         this.setCreatedOn(transactionEntity.getCreatedOn());
     }
 
