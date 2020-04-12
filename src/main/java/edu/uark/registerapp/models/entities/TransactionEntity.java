@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import edu.uark.registerapp.models.api.Transaction;
+
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
@@ -80,6 +82,18 @@ public class TransactionEntity {
 	public LocalDateTime getCreatedOn() {
 		return this.createdOn;
 	}
+
+	public Transaction synchronize(final Transaction apiTransaction) {
+        this.setCashierId(apiTransaction.getCashierId());
+        this.setTotal(apiTransaction.getTotal());
+        this.setType(apiTransaction.getTransactionType());
+        this.setReferenceId(apiTransaction.getTransactionReferenceId());
+
+        apiTransaction.setId(this.getId());
+        apiTransaction.setCreatedOn(this.getCreatedOn());
+
+        return apiTransaction;
+    }
 
 	public TransactionEntity() {
 		this.type = -1;
