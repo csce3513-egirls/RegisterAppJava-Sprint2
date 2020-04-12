@@ -14,7 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-///TODO: additional stuff needed?
+import edu.uark.registerapp.models.api.Transaction;
+
+///TODO: might need to add synchronization function like in ProductEntity
 @Entity
 @Table(name="transaction")
 public class TransactionEntity {
