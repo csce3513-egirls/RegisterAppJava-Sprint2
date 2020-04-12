@@ -84,7 +84,17 @@ public class TransactionEntity {
 		return this.createdOn;
     }
     
+    public Transaction synchronize(final Transaction apiTransaction) {
+        this.setCashierId(apiTransaction.getCashierId());
+        this.setTotal(apiTransaction.getTotal());
+        this.setTransactionType(apiTransaction.getTransactionType());
+        this.setTransactionReferenceId(apiTransaction.getTransactionReferenceId());
 
+        apiTransaction.setId(this.getId());
+        apiTransaction.setCreatedOn(this.getCreatedOn());
+
+        return apiTransaction;
+    }
     
     public TransactionEntity(){
         this.id = new UUID(0, 0);
