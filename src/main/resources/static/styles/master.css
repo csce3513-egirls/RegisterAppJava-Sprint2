@@ -3,6 +3,16 @@ div.header {
 	text-align: right;
 }
 
+img.header {
+	z-index: 1;
+	height: 60px;
+    text-decoration: none;
+    display: inline-block;
+	cursor: pointer;
+	position: fixed;
+	right: 10;
+}
+
 div.main {
 	padding-top: 0px;
 	text-align: center

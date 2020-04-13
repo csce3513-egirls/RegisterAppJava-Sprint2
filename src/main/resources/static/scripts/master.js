@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (signOutActionElement != null) {
 		signOutActionElement.addEventListener("click", signOutActionClickHandler);
 	}
+	////////////////////////////////////////////
+	const shoppingCartActionElement = getShoppingCartActionElement();
+	if (shoppingCartActionElement != null){
+		shoppingCartActionElement.addEventListener("click", shoppingCartClickHandler);
+	}
+	////////////////////////////////////////////
 });
 
 // AJAX
@@ -169,6 +175,13 @@ function getSignOutActionElement() {
 	return document.getElementById("signOutImage");
 }
 
+////////////////////////////////////////////
+// Adding function for shopping cart
+function getShoppingCartActionElement(){
+	return document.getElementById("shoppingCartImage");
+}
+////////////////////////////////////////////
+
 function getErrorMessageContainerElement() {
 	return document.getElementById("error");
 }
@@ -192,3 +205,21 @@ function signOutActionClickHandler() {
 	});
 }
 //End sign out
+
+////////////////////////////////////////////
+//Shopping cart
+function shoppingCartClickHandler(){
+	ajaxDelete("/api/shoppingCart", (callbackResponse) => {
+		if ((callbackResponse.data != null)
+			&& (callbackResponse.data.redirectUrl != null)
+			&& (callbackResponse.data.redirectUrl !== "")) {
+	
+			window.location.replace(callbackResponse.data.redirectUrl);
+		} else {
+			window.location.replace("/"); // TRANSACTION REDIRECT GOES HERE
+		}
+	});
+
+}
+//End shopping cart
+////////////////////////////////////////////
