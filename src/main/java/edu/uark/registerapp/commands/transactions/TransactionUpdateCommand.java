@@ -44,7 +44,7 @@ public class TransactionUpdateCommand implements ResultCommandInterface<Transact
 
 	// Properties
 	private UUID transactionReferenceId;
-	public UUID geTransactionReferenceId() {
+	public UUID getTransactionReferenceId() {
 		return this.transactionReferenceId;
 	}
 	public TransactionUpdateCommand setId(final UUID transactionReferenceId) {
