@@ -18,7 +18,7 @@ function transactionLookupCodeKeypress(event) {
     saveActionClick();
 }
 
-// Save
+// Save // edit to validate search is not empty?
 function saveActionClick(event) {
 	if (!validateSave()) {
 		return;
@@ -51,3 +51,24 @@ function getTransactionLookupCodeElement() {
 	return document.getElementById("transactionLookupCode");
 }
 // End getters and setters
+
+//partial search 
+function search() {
+    document.getElementById("dropdown").classList.toggle("show");
+  }
+  
+  function filterInput() {
+    var input, filter, a, i;
+    input = document.getElementById("userInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("dropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
+      }
+    }
+  }
