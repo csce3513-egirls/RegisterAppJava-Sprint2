@@ -21,6 +21,7 @@ import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.enums.EmployeeClassification;
+import edu.uark.registerapp.commands.products.ProductsQuery;
 
 @Controller
 @RequestMapping(value = "/transactionDetail")
@@ -40,7 +41,24 @@ public class TransactionDetailRouteController extends BaseRouteController {
         this.setErrorMessageFromQueryString(
             new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName()),
             queryParameters);
+            modelAndView.addObject(
+                ViewModelNames.IS_ELEVATED_USER.getValue(),
+                this.isElevatedUser(activeUserEntity.get()));
+    
+            try {
+                modelAndView.addObject(
+                    ViewModelNames.PRODUCTS.getValue(),
+                    this.productsQuery.execute());
+            } catch (final Exception e) {
+                modelAndView.addObject(
+                    ViewModelNames.ERROR_MESSAGE.getValue(),
+                    e.getMessage());
+                modelAndView.addObject(
+                    ViewModelNames.PRODUCTS.getValue(),
+                    (new Product[0]));
+            }
         return modelAndView;
     }
-
+    @Autowired
+	private ProductsQuery productsQuery;
 }
