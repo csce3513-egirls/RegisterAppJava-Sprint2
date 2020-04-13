@@ -21,8 +21,18 @@ import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Product;
 
+// Added mapping and api response so shopping cart image can redirect
+// to transactionDetail.html
+@RestController
+@RequestMapping(value = "/api")
 public class TransactionRestController extends BaseRestController{
-
+    @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
+    public @ResponseBody ApiResponse redirectToShoppingCart(
+		final HttpServletRequest request
+    ){
+        return (new ApiResponse())
+			.setRedirectUrl(ViewNames.TRANSACTION_DETAIL.getRoute());
+    }
 
     
 }
