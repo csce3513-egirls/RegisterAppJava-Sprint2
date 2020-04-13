@@ -20,6 +20,7 @@ import edu.uark.registerapp.controllers.enums.QueryParameterNames;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Product;
+import edu.uark.registerapp.models.api.Transaction;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.enums.EmployeeClassification;
@@ -80,21 +81,29 @@ public class TransactionDetailRouteController extends BaseRouteController {
                 new ModelAndView(ViewNames.
                 TRANSACTION_DETAIL.getViewName()),
                 queryParameters);
-                
-        //TODO: Does this required elevated user status like in ProductDetailRouteController?
-
-        try {
+        
+        //code for if this is a new transaction
+        if (transactionId.equals(new UUID(0, 0))){
             modelAndView.addObject(
-                ViewModelNames.TRANSACTION.getValue(),
-				this.transactionQuery.setTransactionId(transactionId).execute());
-        } catch (final Exception e) {
-            modelAndView.addObject(
-                ViewModelNames.ERROR_MESSAGE.getValue(),
-                e.getMessage());
-            modelAndView.addObject(
-                ViewModelNames.TRANSACTION.getValue());
-                ///TODO: Another parameter required?
+				ViewModelNames.TRANSACTION.getValue(),
+				(new Transaction()));
+        } else {
+            
+            try {
+                modelAndView.addObject(
+                    ViewModelNames.TRANSACTION.getValue(),
+                    this.transactionQuery.setTransactionId(transactionId).execute());
+            } catch (final Exception e) {
+                modelAndView.addObject(
+                    ViewModelNames.ERROR_MESSAGE.getValue(),
+                    e.getMessage());
+                modelAndView.addObject(
+                    ViewModelNames.TRANSACTION.getValue());
+                    ///TODO: Another parameter required?
+            }
         }
+
+        
         return modelAndView;
     }
 
