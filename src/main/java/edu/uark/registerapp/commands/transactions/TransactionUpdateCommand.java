@@ -3,14 +3,12 @@ package edu.uark.registerapp.commands.transactions;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.uark.registerapp.commands.ResultCommandInterface;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
-import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 import edu.uark.registerapp.models.api.Transaction;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.repositories.TransactionRepository;
