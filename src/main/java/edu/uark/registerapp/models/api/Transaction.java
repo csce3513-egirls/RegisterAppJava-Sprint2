@@ -91,7 +91,4 @@ public class Transaction extends ApiResponse {
         this.transactionReferenceId = transactionEntity.getReferenceId();
         this.setCreatedOn(transactionEntity.getCreatedOn());
     }
-
-
-
 }
