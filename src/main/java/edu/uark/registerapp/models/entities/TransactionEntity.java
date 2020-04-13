@@ -10,11 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.StringUtils;
+import edu.uark.registerapp.models.api.Transaction;
+
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-///TODO: additional stuff needed?
 @Entity
 @Table(name="transaction")
 public class TransactionEntity {
@@ -23,75 +23,121 @@ public class TransactionEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private final UUID id;
 
-    public UUID getId() {
-        return this.id;
-    }
+	public UUID getId() {
+		return this.id;
+	}
 
     @Column(name="cashierid")
     private UUID cashierId;
 
-    public UUID getCashierId(){
-        return cashierId;
-    }
+	public UUID getCashierId() {
+		return this.cashierId;
+	}
 
-    public TransactionEntity setCashierId(final UUID cashierId){
-        this.cashierId = cashierId;
-        return this;
-    }
+	public TransactionEntity setCashierId(final UUID cashierId) {
+		this.cashierId = cashierId;
+		return this;
+	}
 
     @Column(name="total")
     private long total;
 
-    public long getTotal() {
-        return total;
-    }
+	public long getTotal() {
+		return this.total;
+	}
 
-    public TransactionEntity setTotal (final long total){
-        this.total = total;
-        return this;
-    }
+	public TransactionEntity setTotal(final long total) {
+		this.total = total;
+		return this;
+	}
 
-    @Column(name="transactiontype")
-    private int transactionType;
+	@Column(name = "transactiontype")
+	private int type; // TODO: The idea is to map this to different types of transactions: Sale, Return, etc.
 
-    public int getTransactionType() {
-        return transactionType;
-    }
+	public int getType() {
+		return this.type;
+	}
 
-    public TransactionEntity setTransactionType(final int transactionType) {
-        this.transactionType = transactionType;
-        return this;
-    }
+	public TransactionEntity setType(final int type) {
+		this.type = type;
+		return this;
+	}
 
     @Column(name="transactionreferenceid")
-    private UUID transactionReferenceId;
+    private UUID referenceId;
 
-    public UUID getTransactionReferenceId() {
-        return transactionReferenceId;
-    }
+	public UUID getReferenceId() {
+		return this.referenceId;
+	}
 
-    public TransactionEntity setTransactionReferenceId(final UUID transactionReferenceId) {
-        this.transactionReferenceId = transactionReferenceId;
-        return this;
-    }
+	public TransactionEntity setReferenceId(final UUID referenceId) {
+		this.referenceId = referenceId;
+		return this;
+	}
 
-    @Column(name="createdon", insertable=false, updatable = false)
-    @Generated(GenerationTime.INSERT)
+	@Column(name = "createdon", insertable = false, updatable = false)
+	@Generated(GenerationTime.INSERT)
 	private LocalDateTime createdOn;
+
 	public LocalDateTime getCreatedOn() {
 		return this.createdOn;
+	}
+
+	public Transaction synchronize(final Transaction apiTransaction) {
+        this.setCashierId(apiTransaction.getCashierId());
+        this.setTotal(apiTransaction.getTotal());
+        this.setType(apiTransaction.getTransactionType());
+        this.setReferenceId(apiTransaction.getTransactionReferenceId());
+
+        apiTransaction.setId(this.getId());
+        apiTransaction.setCreatedOn(this.getCreatedOn());
+
+        return apiTransaction;
+    }
+
+	public TransactionEntity() {
+		this.type = -1;
+		this.total = 0L;
+		this.id = new UUID(0, 0);
+		this.cashierId = new UUID(0, 0);
+		this.referenceId = new UUID(0, 0);
+	}
+
+	public TransactionEntity(
+		final UUID cashierId,
+		final long total,
+		final int type
+	) {
+
+		this.type = type;
+		this.total = total;
+		this.id = new UUID(0, 0);
+		this.cashierId = cashierId;
+		this.referenceId = new UUID(0, 0);
+	}
+
+	public TransactionEntity(
+		final UUID cashierId,
+		final long total,
+		final int type,
+		final UUID referenceId
+	) {
+
+		this.type = type;
+		this.total = total;
+		this.id = new UUID(0, 0);
+		this.cashierId = cashierId;
+		this.referenceId = referenceId;
     }
     
-
-    
-    public TransactionEntity(){
+    public TransactionEntity(final Transaction apiTransaction) {
         this.id = new UUID(0, 0);
-        this.cashierId = new UUID(0, 0);
-        this.total = -1;
-        this.transactionType = -1;
-        this.transactionReferenceId = new UUID(0, 0);
+        this.cashierId = apiTransaction.getCashierId();
+        this.total = apiTransaction.getTotal();
+        this.type = apiTransaction.getTransactionType();
+        this.referenceId = (
+            (apiTransaction.getTransactionReferenceId() != null)
+				? apiTransaction.getTransactionReferenceId()
+                : new UUID(0, 0));  
     }
-
-
-
 }
