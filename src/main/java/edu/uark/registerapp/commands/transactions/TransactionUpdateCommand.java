@@ -65,13 +65,13 @@ public class TransactionUpdateCommand implements ResultCommandInterface<Transact
 	public UUID getTransactionType() {
 		return this.transactionType;
 	}
-	public TransactionUpdateCommand setTransactionTypeotal(final UUID transactionType) {
+	public TransactionUpdateCommand setTransactionType(final UUID transactionType) {
 		this.transactionType = transactionType;
 		return this;
 	}
 
 	private Transaction apiTransaction;
-	public Transaction getApiPTransaction() {
+	public Transaction getApiTransaction() {
 		return this.apiTransaction;
 	}
 	public TransactionUpdateCommand setApiTransaction(final Transaction apiTransaction) {
