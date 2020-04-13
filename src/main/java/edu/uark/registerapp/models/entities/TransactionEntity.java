@@ -128,5 +128,16 @@ public class TransactionEntity {
 		this.id = new UUID(0, 0);
 		this.cashierId = cashierId;
 		this.referenceId = referenceId;
-	}
+    }
+    
+    public TransactionEntity(final Transaction apiTransaction) {
+        this.id = new UUID(0, 0);
+        this.cashierId = apiTransaction.getCashierId();
+        this.total = apiTransaction.getTotal();
+        this.type = apiTransaction.getTransactionType();
+        this.referenceId = (
+            (apiTransaction.getTransactionReferenceId() != null)
+				? apiTransaction.getTransactionReferenceId()
+                : new UUID(0, 0));  
+    }
 }
