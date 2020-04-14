@@ -1,56 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-	const transactionLookupCodeElement = getTransactionLookupCodeElement(); 
+	const productListElements = document.getElementById("transactionListing").children;
 
-	transactionLookupCodeElement.addEventListener("keypress", transactionLookupCodeKeypress);
-	
-	getSaveActionElement().addEventListener("click", saveActionClick);
-	
-	if (!transactionLookupCodeElement.disabled) {
-		transactionLookupCodeElement.focus();
-		transactionLookupCodeElement.select();
+	for (let i = 0; i < productListElements.length; i++) {
+		productListElements[i].addEventListener("click", productClick);
 	}
 });
 
-function transactionLookupCodeKeypress(event) {
-	if (event.which !== 13) { // Enter key
-		return;
-    }
-    saveActionClick();
-}
+function findClickedListItemElement(clickedTarget) {
+	if (clickedTarget.tagName.toLowerCase() === "li") {
+		return clickedTarget;
+	} else {
+		let ancestorIsListItem = false;
+		let ancestorElement = clickedTarget.parentElement;
 
-// Save // edit to validate search is not empty?
-function saveActionClick(event) {
-	if (!validateSave()) {
-		return;
+		while (!ancestorIsListItem && (ancestorElement != null)) {
+			ancestorIsListItem = (ancestorElement.tagName.toLowerCase() === "li");
+
+			if (!ancestorIsListItem) {
+				ancestorElement = ancestorElement.parentElement;
+			}
+		}
+
+		return (ancestorIsListItem ? ancestorElement : null);
 	}
-
-	const saveActionElement = event.target;
-	saveActionElement.disabled = true;
-};
-
-function validateSave() {
-	const lookupCode = getTransactionLookupCode();
-	if ((lookupCode == null) || (lookupCode.trim() === "")) {
-		displayError("Please provide a valid transaction lookup code.");
-		return false;
-	}
-
-	return true;
-}
-// End save
-
-// Getters and setters
-function getSaveActionElement() {
-	return document.getElementById("searchButton");
 }
 
-function getTransactionLookupCode() {
-	return getTransactionLookupCodeElement().value;
+function productClick(event) {
+	let listItem = findClickedListItemElement(event.target);
+
+	window.location.assign(
+		"/productDetail/"
+		+ listItem.querySelector("input[name='productId'][type='hidden']").value);
 }
-function getTransactionLookupCodeElement() {
-	return document.getElementById("transactionLookupCode");
-}
-// End getters and setters
 
 //partial search 
 function search() {

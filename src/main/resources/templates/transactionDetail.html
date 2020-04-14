@@ -48,18 +48,18 @@
 			<button onclick="search()" type="button" class="action">Search Lookup Code</button>
 			<div id="dropdown" class="dropdown-content">
 			  <input type="text" placeholder="Search.." id="userInput" onkeyup="filterInput()">
-			  <li th:each="product : ${products}">
-				<input type="hidden" name="productId" th:value="${product.id}" />
-				<span class="productLookupCodeDisplay" th:text="${product.lookupCode}">lookupCode</span>
-				<br />&nbsp;&nbsp;<span class="productCountDisplay" th:text="${product.count}">0</span>
-				<br />&nbsp;&nbsp;<span class="productPriceDisplay" th:text="${product.price}">0</span>
-				<br />&nbsp;&nbsp;<span class="productCreatedOnDisplay" th:text="${product.createdOn}">12/31/1999</span>
-			</li> 
+			  <ul id="transactionListing" class="transaction">
+				<li th:each="product : ${products}">
+					<input type="hidden" name="productId" th:value="${product.id}" />
+					<span class="productLookupCodeDisplay" th:text="${product.lookupCode}">lookupCode</span>
+					<br />&nbsp;&nbsp;<span class="productCountDisplay" th:text="${product.count}">0</span>
+					<br />&nbsp;&nbsp;<span class="productPriceDisplay" th:text="${product.price}">0</span>
+					<br />&nbsp;&nbsp;<span class="productCreatedOnDisplay" th:text="${product.createdOn}">12/31/1999</span>
+				</li>
+			  </ul> 
 
 			</div>
 		  </div>
-
-<!--need id="transactionLookupCode" when user selects lookup code make this element-->
 
 		<div class="transactionsActionsWrapper">
 			<br />
