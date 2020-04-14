@@ -64,7 +64,7 @@ public class TransactionDetailRouteController extends BaseRouteController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "{transactionId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{transactionId}", method = RequestMethod.GET)
     public ModelAndView startWithTransaction(
         @PathVariable final UUID transactionId,
         @RequestParam final Map<String, String> queryParameters,
