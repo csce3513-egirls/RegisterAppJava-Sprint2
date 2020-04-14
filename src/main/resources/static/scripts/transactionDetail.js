@@ -62,7 +62,7 @@ function search() {
     input = document.getElementById("userInput");
     filter = input.value.toUpperCase();
     div = document.getElementById("dropdown");
-    a = div.getElementsByTagName("a");
+    a = div.getElementsByTagName("li");
     for (i = 0; i < a.length; i++) {
       txtValue = a[i].textContent || a[i].innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
