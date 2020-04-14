@@ -18,7 +18,6 @@ public class TransactionUpdateCommand implements ResultCommandInterface<Transact
 	@Transactional
 	@Override
 	public Transaction execute() {
-		//this.validateProperties();
 
 		final Optional<TransactionEntity> transactionEntity =
 			this.transactionRepository.findById(this.transactionReferenceId);
@@ -34,13 +33,6 @@ public class TransactionUpdateCommand implements ResultCommandInterface<Transact
 
 		return this.apiTransaction;
 	}
-
-	// Helper methods
-	/*private void validateProperties() {
-		if (StringUtils.isBlank(this.apiTransaction.getTransactionReferenceId())) {
-			throw new UnprocessableEntityException("lookupcode");
-		}
-	}*/
 
 	// Properties
 	private UUID transactionReferenceId;

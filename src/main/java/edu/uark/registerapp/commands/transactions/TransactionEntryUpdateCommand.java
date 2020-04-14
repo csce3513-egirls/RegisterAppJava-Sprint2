@@ -18,10 +18,9 @@ public class TransactionEntryUpdateCommand implements ResultCommandInterface<Tra
 	@Transactional
 	@Override
 	public TransactionEntry execute() {
-		//this.validateProperties();
 
 		final Optional<TransactionEntryEntity> transactionEntryEntity =
-			this.transactionEntryRepository.findById(this.productId); //TODO: should i see if productif exists or transaction id???
+			this.transactionEntryRepository.findById(this.productId); 
 		if (!transactionEntryEntity.isPresent()) { // No record with the associated record ID exists in the database.
 			throw new NotFoundException("TransactionEntry");
 		}
@@ -34,13 +33,6 @@ public class TransactionEntryUpdateCommand implements ResultCommandInterface<Tra
 
 		return this.apiTransactionEntry;
 	}
-
-	// Helper methods
-	/*private void validateProperties() {
-		if (StringUtils.isBlank(this.apiTransaction.getTransactionReferenceId())) {
-			throw new UnprocessableEntityException("lookupcode");
-		}
-	}*/
 
 	// Properties
 	private UUID transactionId;
