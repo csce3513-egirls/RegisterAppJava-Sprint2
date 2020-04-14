@@ -44,6 +44,12 @@
 							<input id="productCount" type="number" th:value="${!product.isEmpty} ? ${product.count} : ''" class="update" th:disabled="not ${isElevatedUser}" />
 						</td>
 					</tr>
+					<tr>
+						<td class="label">Price:</td>
+						<td>
+							<input id="productPrice" type="number" th:value="${!product.isEmpty} ? ${product.price} : ''" class="update" th:disabled="not ${isElevatedUser}" />
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -53,6 +59,9 @@
 			<div id="deleteActionContainer" th:class="${product.isEmpty} ? hidden : ''">
 				<button id="deleteButton" type="button" class="action">Delete</button>
 				<br />
+				<br />
+				<button id="cartButton" type="button" class="action">Add to cart</button>
+                <br />
 				<br />
 			</div>
 			<button id="saveButton" type="button" class="action">Save</button>

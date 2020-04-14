@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	getSaveActionElement().addEventListener("click", saveActionClick);
 	getDeleteActionElement().addEventListener("click", deleteActionClick);
 
+	getCartActionElement().addEventListener("click", cartActionClick);
+
 	if (!productLookupCodeElement.disabled) {
 		productLookupCodeElement.focus();
 		productLookupCodeElement.select();
@@ -137,6 +139,14 @@ function deleteActionClick(event) {
 };
 // End delete
 
+// Adding to cart
+function cartActionClick(event) {
+	// Implement a function that will send the product to the shopping cart
+	// Similar to Save I think.
+	// Waiting on database to be fixed.
+}
+// End adding to cart
+
 // Getters and setters
 function getSaveActionElement() {
 	return document.getElementById("saveButton");
@@ -148,6 +158,10 @@ function getSavedAlertModalElement() {
 
 function getDeleteActionElement() {
 	return document.getElementById("deleteButton");
+}
+
+function getCartActionElement() {
+	return document.getElementById("cartButton");
 }
 
 function getProductId() {
