@@ -35,7 +35,7 @@ public class TransactionRestController extends BaseRestController{
 			.setRedirectUrl(ViewNames.TRANSACTION_DETAIL.getRoute());
     }
 
-    @RequestMapping(value = "/deleteTransaction", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{transactionId}", method = RequestMethod.DELETE)
     public @ResponseBody ApiResponse deleteTransaction(
         @PathVariable final UUID transactionId, //TODO: make sure this works for deleting transaction
         final HttpServletRequest request
