@@ -35,7 +35,8 @@ import edu.uark.registerapp.commands.transactions.TransactionQuery;
 public class TransactionRestController extends BaseRestController{
     @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
     public @ResponseBody ApiResponse redirectToShoppingCart(
-		final HttpServletRequest request
+        final HttpServletRequest request,
+        final HttpServletResponse response
     ){
         return (new ApiResponse())
 			.setRedirectUrl(ViewNames.TRANSACTION_DETAIL.getRoute());
@@ -44,7 +45,8 @@ public class TransactionRestController extends BaseRestController{
     @RequestMapping(value = "/{transactionId}", method = RequestMethod.DELETE)
     public @ResponseBody ApiResponse deleteTransaction(
         @PathVariable final UUID transactionId, //TODO: make sure this works for deleting transaction
-        final HttpServletRequest request
+        final HttpServletRequest request,
+        final HttpServletResponse response
     ) {
 
         //TODO: not sure if this is the correct way to check if current user matches employeeId for transaction
@@ -56,8 +58,12 @@ public class TransactionRestController extends BaseRestController{
 
         if(activeUserEntity.getEmployeeId() != transaction.getCashierId())
         {
-            //TODO: not sure what to put here
-        }
+            final ApiResponse apiResponse = 
+                this.redirectUserNotElevated(request, response);
+            return apiResponse;
+        }   //TODO: is this a good way to deal with trying to delete a transaction that isn't yours?
+            //also BaseRestController has no method for noPermissionsResponse like BaseRouteController
+
 
         this.transactionDeleteCommand.
             setTransactionId(transactionId).
