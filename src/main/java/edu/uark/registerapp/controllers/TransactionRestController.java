@@ -56,7 +56,7 @@ public class TransactionRestController extends BaseRestController{
         this.transactionQuery.setTransactionId(transactionId).execute();
 
 
-        if(activeUserEntity.getEmployeeId() != transaction.getCashierId())
+        if(!activeUserEntity.getEmployeeId().equals(transaction.getCashierId()))
         {
             final ApiResponse apiResponse = 
                 this.redirectUserNotElevated(request, response);
