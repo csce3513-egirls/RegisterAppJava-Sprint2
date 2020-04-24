@@ -112,12 +112,12 @@ function validateSave() {
 		return false;
 	}
 
-	const count = getProductPrice();
-	if ((count == null) || isNaN(count)) {
-		displayError("Please provide a valid product count.");
+	const price = getProductPrice();
+	if ((price == null) || isNaN(price)) {
+		displayError("Please provide a valid product price.");
 		return false;
-	} else if (count < 0) {
-		displayError("Product count may not be negative.");
+	} else if ([price] < 0) {
+		displayError("Product price may not be negative.");
 		return false;
 	}
 
