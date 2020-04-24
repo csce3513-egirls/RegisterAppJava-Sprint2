@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const productLookupCodeElement = getProductLookupCodeElement();
 
 	getProductCountElement().addEventListener("keypress", productCountKeypress);
+	getProductPriceElement().addEventListener("keypress", productPriceKeypress);
 	productLookupCodeElement.addEventListener("keypress", productLookupCodeKeypress);
 	
 	getSaveActionElement().addEventListener("click", saveActionClick);
@@ -25,9 +26,21 @@ function productLookupCodeKeypress(event) {
 	const productCountElement = getProductCountElement();
 	productCountElement.focus();
 	productCountElement.select();
+
+	const productPriceElement = getProductPriceElement();
+	productPriceElement.focus();
+	productPriceElement.select();
 }
 
 function productCountKeypress(event) {
+	if (event.which !== 13) { // Enter key
+		return;
+	}
+
+	saveActionClick();
+}
+
+function productPriceKeypress(event) {
 	if (event.which !== 13) { // Enter key
 		return;
 	}
@@ -51,6 +64,7 @@ function saveActionClick(event) {
 	const saveProductRequest = {
 		id: productId,
 		count: getProductCount(),
+		price: getProductPrice(),
 		lookupCode: getProductLookupCode()
 	};
 
@@ -90,6 +104,15 @@ function validateSave() {
 	}
 
 	const count = getProductCount();
+	if ((count == null) || isNaN(count)) {
+		displayError("Please provide a valid product count.");
+		return false;
+	} else if (count < 0) {
+		displayError("Product count may not be negative.");
+		return false;
+	}
+
+	const count = getProductPrice();
 	if ((count == null) || isNaN(count)) {
 		displayError("Please provide a valid product count.");
 		return false;
@@ -186,5 +209,12 @@ function getProductCount() {
 }
 function getProductCountElement() {
 	return document.getElementById("productCount");
+}
+
+function getProductPrice() {
+	return Number(getProductPriceElement().value);
+}
+function getProductPriceElement() {
+	return document.getElementById("productPrice");
 }
 // End getters and setters
