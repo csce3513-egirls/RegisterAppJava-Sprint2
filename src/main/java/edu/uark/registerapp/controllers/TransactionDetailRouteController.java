@@ -41,11 +41,14 @@ public class TransactionDetailRouteController extends BaseRouteController {
             return this.buildInvalidSessionResponse();
         } 
 
+        
+
+
         final ModelAndView modelAndView =
         this.setErrorMessageFromQueryString(
             new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName()),
             queryParameters);
-            modelAndView.addObject(
+            modelAndView.addObject( //TODO: Do we need the user to be elevated?
                 ViewModelNames.IS_ELEVATED_USER.getValue(),
                 this.isElevatedUser(activeUserEntity.get()));
     
@@ -70,11 +73,7 @@ public class TransactionDetailRouteController extends BaseRouteController {
         @RequestParam final Map<String, String> queryParameters,
         final HttpServletRequest request
     ) {
-        final Optional<ActiveUserEntity> activeUserEntity =
-			this.getCurrentUser(request);
-		if (!activeUserEntity.isPresent()) {
-			return this.buildInvalidSessionResponse();
-        }
+        //DO NOT PUT ACTIVE USER CHECKING CODE HERE, WILL BREAK TRANSACTION
         
         final ModelAndView modelAndView = 
             this.setErrorMessageFromQueryString(
