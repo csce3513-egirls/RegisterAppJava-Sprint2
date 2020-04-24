@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import edu.uark.registerapp.models.entities.TransactionEntity;
 
+
+// to do: create ActiveTransaction files
 public class Transaction extends ApiResponse {
     private UUID id;
     public UUID getId() {
