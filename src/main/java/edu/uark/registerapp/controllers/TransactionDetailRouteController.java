@@ -41,9 +41,6 @@ public class TransactionDetailRouteController extends BaseRouteController {
             return this.buildInvalidSessionResponse();
         } 
 
-        
-
-
         final ModelAndView modelAndView =
         this.setErrorMessageFromQueryString(
             new ModelAndView(ViewNames.TRANSACTION_DETAIL.getViewName()),
@@ -56,6 +53,9 @@ public class TransactionDetailRouteController extends BaseRouteController {
                 modelAndView.addObject(
                     ViewModelNames.PRODUCTS.getValue(),
                     this.productsQuery.execute());
+                modelAndView.addObject(
+                        ViewModelNames.TRANSACTION.getValue(),
+                        (new Transaction()));
             } catch (final Exception e) {
                 modelAndView.addObject(
                     ViewModelNames.ERROR_MESSAGE.getValue(),
@@ -75,35 +75,8 @@ public class TransactionDetailRouteController extends BaseRouteController {
     ) {
         //DO NOT PUT ACTIVE USER CHECKING CODE HERE, WILL BREAK TRANSACTION
         
-        final ModelAndView modelAndView = 
-            this.setErrorMessageFromQueryString(
-                new ModelAndView(ViewNames.
-                TRANSACTION_DETAIL.getViewName()),
-                queryParameters);
-        
-        //code for if this is a new transaction
-        if (transactionId.equals(new UUID(0, 0))){
-            modelAndView.addObject(
-				ViewModelNames.TRANSACTION.getValue(),
-				(new Transaction()));
-        } else {
-            
-            try {
-                modelAndView.addObject(
-                    ViewModelNames.TRANSACTION.getValue(),
-                    this.transactionQuery.setTransactionId(transactionId).execute());
-            } catch (final Exception e) {
-                modelAndView.addObject(
-                    ViewModelNames.ERROR_MESSAGE.getValue(),
-                    e.getMessage());
-                modelAndView.addObject(
-                    ViewModelNames.TRANSACTION.getValue());
-                    ///TODO: Another parameter required?
-            }
-        }
-
-        
-        return modelAndView;
+        return new ModelAndView(ViewNames.MAIN_MENU.getViewName(),
+            queryParameters);
     }
 
 

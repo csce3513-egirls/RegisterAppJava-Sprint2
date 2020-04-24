@@ -66,6 +66,13 @@
 			<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
 			<br /><br />
 			<button id="checkOutButton" type="button" class="action">Check Out</button>
+			<ul id="transactionListing" class="transaction">
+					<td class="label">Total:</td>
+						<td>
+							<input id="total" type="number" th:value="${transaction.total}" class="update"/>
+						</td>
+				</li>
+			  </ul>
 		</div>
 	</div>
 
