@@ -18,58 +18,37 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.uark.registerapp.commands.activeUsers.ValidateActiveUserCommand;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.ApiResponse;
+import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.commands.transactions.TransactionDeleteCommand;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.api.Transaction;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
 
-// Added mapping and api response so shopping cart image can redirect
-// to transactionDetail.html
+// when a variable within an object that is of type /api/transaction is manipulated, the controller maps here
+
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/transaction")
 public class TransactionRestController extends BaseRestController{
-    @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
-    public @ResponseBody ApiResponse redirectToShoppingCart(
-        final HttpServletRequest request,
-        final HttpServletResponse response
-    ){
-        return (new ApiResponse())
-			.setRedirectUrl(ViewNames.TRANSACTION_DETAIL.getRoute());
-    }
+    // method that occurs when a transaction is cancelled
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody ApiResponse cancelTransaction(
+        @PathVariable final UUID transactionId,
+        final HttpServletRequest request
+	) {
+        try{
+            this.transactionDeleteCommand.
+                setTransactionId(transactionId).
+                execute();
+        }
+        catch(Exception e){
+            return (new ApiResponse())
+			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+        }
+		return (new ApiResponse())
+			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+	}
 
-    @RequestMapping(value = "/{transactionId}", method = RequestMethod.DELETE)
-    public @ResponseBody ApiResponse deleteTransaction(
-        @PathVariable final UUID transactionId, //TODO: make sure this works for deleting transaction
-        final HttpServletRequest request,
-        final HttpServletResponse response
-    ) {
-
-        //TODO: not sure if this is the correct way to check if current user matches employeeId for transaction
-        final ActiveUserEntity activeUserEntity =
-         this.validateActiveUserCommand.setSessionKey(request.getSession().getId()).execute();
-        final Transaction transaction = 
-        this.transactionQuery.setTransactionId(transactionId).execute();
-
-
-        if(!activeUserEntity.getEmployeeId().equals(transaction.getCashierId()))
-        {
-            final ApiResponse apiResponse = 
-                this.redirectUserNotElevated(request, response);
-            return apiResponse;
-        }   //TODO: is this a good way to deal with trying to delete a transaction that isn't yours?
-            //also BaseRestController has no method for noPermissionsResponse like BaseRouteController
-
-
-        this.transactionDeleteCommand.
-            setTransactionId(transactionId).
-            execute();
-
-        return (new ApiResponse())
-		    .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
-    }
-
-    
     @Autowired
     private TransactionDeleteCommand transactionDeleteCommand;
 

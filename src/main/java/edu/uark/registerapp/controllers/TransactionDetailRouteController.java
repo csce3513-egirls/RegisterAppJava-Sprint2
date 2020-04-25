@@ -21,15 +21,19 @@ import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.api.Transaction;
+import edu.uark.registerapp.models.api.TransactionEntry;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.enums.EmployeeClassification;
 import edu.uark.registerapp.commands.products.ProductsQuery;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
+import edu.uark.registerapp.commands.transactions.TransactionUpdateCommand;
 
 @Controller
 @RequestMapping(value = "/transactionDetail")
 public class TransactionDetailRouteController extends BaseRouteController {
+
+    // method thats executed everytime the transactionDetail page is displayed
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView start(
         @RequestParam final Map<String, String> queryParameters,
@@ -67,21 +71,26 @@ public class TransactionDetailRouteController extends BaseRouteController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/{transactionId}", method = RequestMethod.GET)
-    public ModelAndView startWithTransaction(
+    // method thats executed when a product is added to a transaction
+    @RequestMapping(value = "/{transactionId}", method = RequestMethod.POST)
+    public ModelAndView addToTransaction(
         @PathVariable final UUID transactionId,
-        @RequestParam final Map<String, String> queryParameters,
-        final HttpServletRequest request
-    ) {
-        //DO NOT PUT ACTIVE USER CHECKING CODE HERE, WILL BREAK TRANSACTION
-        
-        return new ModelAndView(ViewNames.MAIN_MENU.getViewName(),
-            queryParameters);
+        TransactionEntry transactionEntry,
+        HttpServletRequest request
+    ) { 
+
+        // TO-DO: upon execution, make sure transactionEntry is saved with correct transaction ID
+        // then redirct back to transaction detail and possibly add any new transaction entry objects to ModelAndView?
+        return new ModelAndView(REDIRECT_PREPEND.concat(
+            ViewNames.TRANSACTION_DETAIL.getRoute()));
     }
 
 
     @Autowired
     private TransactionQuery transactionQuery;
+
+    @Autowired
+    private TransactionUpdateCommand transactionUpdateCommand;
 
     @Autowired
 	private ProductsQuery productsQuery;
