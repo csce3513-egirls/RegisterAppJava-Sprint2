@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-	const productListElements = document.getElementById("transactionListing").children;
+    const productListElements = document.getElementsByClassName("productAddToCart");
 
 	for (let i = 0; i < productListElements.length; i++) {
-		productListElements[i].addEventListener("click", productClick);
-	}
+        productListElements[i].addEventListener("click", productClick);
+    }
 });
 
 function findClickedListItemElement(clickedTarget) {
@@ -26,10 +26,10 @@ function findClickedListItemElement(clickedTarget) {
 }
 
 function productClick(event) {
-	let listItem = findClickedListItemElement(event.target);
+    let listItem = findClickedListItemElement(event.target);
 
 	window.location.assign(
-		"/productDetail/"
+		"/transactionDetail/"
 		+ listItem.querySelector("input[name='productId'][type='hidden']").value);
 }
 
