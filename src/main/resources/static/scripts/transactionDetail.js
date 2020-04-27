@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const productListElements = document.getElementsByClassName("productAddToCart");
+  const productListElements = document.getElementById("transactionListing").children;
 
 	for (let i = 0; i < productListElements.length; i++) {
-        productListElements[i].addEventListener("click", productClick);
-    }
+    productListElements[i].addEventListener("click", productClick);
+	}
 });
 
 function findClickedListItemElement(clickedTarget) {
@@ -39,31 +39,11 @@ function completeSaveAction(callbackResponse) {
 }
 
 function productClick(event) {
-    let listItem = findClickedListItemElement(event.target);
+	let listItem = findClickedListItemElement(event.target);
 
-    const saveActionElement = event.target;
-    const saveActionUrl = ("/transactionDetail/createTransactionEntry/"); //TODO: WRONG URL
-    const saveTransactionEntryRequest = {
-        id: "",
-        transactionId: "", //TODO: Verify these values
-        productId: listItem.querySelector("input[name='productId'][type='hidden']").value,
-        quantity: listItem.getElementsByClassName("productQuantity").value,
-        price: listItem.getElementsByClassName(productPriceDisplay).value
-    };
-
-    ajaxPost(saveActionUrl, saveTransactionEntryRequest), (callbackResponse) => {
-        saveActionElement.disabled = false;
-
-        if(isSuccessResponse(callbackResponse))
-        {
-            completeSaveAction(callbackResponse);
-        }
-    }
-
-
-	//window.location.assign(
-	//	"/transactionDetail/createTrasactionEntry/"
-	//	+ listItem.querySelector("input[name='productId'][type='hidden']").value);
+	window.location.assign(
+		"/productDetail/"
+		+ listItem.querySelector("input[name='productId'][type='hidden']").value);
 }
 
 //partial search 

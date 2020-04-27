@@ -28,6 +28,7 @@ import edu.uark.registerapp.models.enums.EmployeeClassification;
 import edu.uark.registerapp.commands.products.ProductsQuery;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
 import edu.uark.registerapp.commands.transactions.TransactionEntriesQuery;
+import edu.uark.registerapp.commands.transactions.TransactionEntryCreateCommand;
 import edu.uark.registerapp.commands.transactions.TransactionUpdateCommand;
 
 @Controller
@@ -44,7 +45,8 @@ public class TransactionDetailRouteController extends BaseRouteController {
         final Optional<ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
         if(!activeUserEntity.isPresent()){
             return this.buildInvalidSessionResponse();
-        } 
+        }
+        
 
         final ModelAndView modelAndView =
         this.setErrorMessageFromQueryString(
@@ -113,4 +115,5 @@ public class TransactionDetailRouteController extends BaseRouteController {
     
     @Autowired
     private TransactionEntriesQuery transactionEntriesQuery;
+
 }

@@ -55,8 +55,6 @@
 					<br />&nbsp;&nbsp;<span class="productCountDisplay" th:text="${product.count}">0</span>
 					<br />&nbsp;&nbsp;<span class="productPriceDisplay" th:text="${product.price}">0</span>
                     <br />&nbsp;&nbsp;<span class="productCreatedOnDisplay" th:text="${product.createdOn}">12/31/1999</span>
-                    <br />&nbsp;&nbsp;<button class="productAddToCart">Add to Cart</button>
-                    <br />&nbsp;&nbsp;<input class="productQuantity" type="text">
 				</li>
 			  </ul> 
 
@@ -68,14 +66,23 @@
 			<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
 			<br /><br />
 			<button id="checkOutButton" type="button" class="action">Check Out</button>
-			<ul id="transactionListing" class="transaction">
-					<td class="label">Total:</td>
-						<td>
-							<input id="total" type="number" th:value="${transaction.total}" class="update"/>
-						</td>
-				</li>
-			  </ul>
 		</div>
+		<ul  id="transactionListing" class="transaction">
+			<li th:each="transactionEntry : ${transactionEntries}">
+				<span class="transactionEntryTransactionIdDisplay" th:text="${transactionEntry.transactionId}">0</span>
+				<br /><span class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
+				<br /><span class="transactionEntryQuantityDisplay" th:text="${transactionEntry.quantity}">0</span>
+				<br /><span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
+				<br /><span class="transactionEntryCreatedOnDisplay" th:text="${transactionEntry.createdOn}">12/31/1999</span>
+			</li>
+		</ul>
+		<ul id="transactionListing" class="transaction">
+			<td class="label">Total:</td>
+				<td>
+					<input id="total" type="number" th:value="${transaction.total}" class="update"/>
+				</td>
+		</li>
+	</ul>
 	</div>
 
 	<div>
