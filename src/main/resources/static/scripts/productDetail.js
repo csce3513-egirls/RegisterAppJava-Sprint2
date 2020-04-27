@@ -178,7 +178,7 @@ function completeSaveAction(callbackResponse) {//TODO: Function might //be incom
 function cartActionClick(event) {
     console.log("cartClicked");
     const saveActionElement = event.target;
-    const saveActionUrl = ("/api/transactionEntry/");
+    const saveActionUrl = ("/api/transaction/transactionEntry");
     saveActionElement.disabled = true;
     
     console.log("made it past initial variables");

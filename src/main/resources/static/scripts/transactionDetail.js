@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("transactionListing").children;
+    const finishTransactionButton = document.getElementById("checkOutButton");
 
 	for (let i = 0; i < productListElements.length; i++) {
     productListElements[i].addEventListener("click", productClick);
     }
     
-
+    finishTransactionButton.addEventListener("click", finishTransactionClick);
 
 });
 
@@ -39,6 +40,26 @@ function completeSaveAction(callbackResponse) {
 		window.location.replace(callbackResponse.data.redirectUrl);
 		return;
 	}
+}
+
+function finishTransactionClick(event) {
+    let finishTransactionElement = event.target;
+
+    const finishActionUrl = ("api/transaction/finishTransaction");
+    const finishActionRequest = null;
+
+    ajaxPost(finishActionUrl, finishActionRequest, (callbackResponse) => {
+        finishTransactionElement.disabled = false;
+
+        if (isSuccessResponse(callbackResponse)) {
+
+            if ((callbackResponse.data != null)
+                && (callbackResponse.data.id != null)
+                && (callbackResponse.data.id.trim() !== "")) {
+
+            }
+        }
+    });
 }
 
 function productClick(event) {

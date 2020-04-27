@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.uark.registerapp.commands.activeUsers.ValidateActiveUserCommand;
 import edu.uark.registerapp.controllers.enums.ViewNames;
+import edu.uark.registerapp.controllers.enums.TransactionEntryDeleteBy;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.commands.transactions.TransactionDeleteCommand;
@@ -30,10 +31,10 @@ import edu.uark.registerapp.commands.transactions.TransactionQuery;
 
 // when a variable within an object that is of type /api/transaction is manipulated, the controller maps here
 @RestController
-@RequestMapping(value = "/api/transactionEntry")
+@RequestMapping(value = "/api/transaction")
 public class TransactionRestController extends BaseRestController{
     // method that occurs when a transactionEntry is created
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/transactionEntry", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse createTransactionEntry(
 		@RequestBody final TransactionEntry transactionEntry,
 		final HttpServletRequest request,
@@ -43,16 +44,51 @@ public class TransactionRestController extends BaseRestController{
 		return this.transactionEntryCreateCommand
 			.setApiTransactionEntry(transactionEntry)
 			.execute();
-	}
-   
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody ApiResponse cancelTransactionEntry(
-        @PathVariable final UUID transactionEntryId,
+    }
+    @RequestMapping(value="/finishTransaction", method = RequestMethod.POST)
+	public @ResponseBody ApiResponse finishTransaction(
         final HttpServletRequest request
 	) { 
         try{
+            UUID deleteUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
             this.transactionEntryDeleteCommand.
-                setId(transactionEntryId).
+                setTransactionId(deleteUUID).
+                setDeleteBy(TransactionEntryDeleteBy.TRANSACTION_ID).
+                execute();
+
+            
+        }
+        catch(Exception e){
+            System.out.println("There was an exception! " + e);
+            return (new ApiResponse())
+			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+        }
+		return (new ApiResponse())
+			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+   //TODO: FINISH THE FUNCTION BELOW
+    @RequestMapping(value="/cancelTransaction", method = RequestMethod.DELETE)
+	public @ResponseBody ApiResponse cancelTransaction(
+        final HttpServletRequest request
+	) { 
+        try{
+            UUID deleteUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
+            this.transactionEntryDeleteCommand.
+                setTransactionId(deleteUUID).
                 execute();
         }
         catch(Exception e){
