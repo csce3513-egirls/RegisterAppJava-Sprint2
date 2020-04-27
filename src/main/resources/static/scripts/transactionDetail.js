@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const productListElements = document.getElementById("transactionListing").children;
+    const productListElements = document.getElementById("transactionListing").children;
 
 	for (let i = 0; i < productListElements.length; i++) {
     productListElements[i].addEventListener("click", productClick);
-	}
+    }
+    
+
+
 });
 
 function findClickedListItemElement(clickedTarget) {

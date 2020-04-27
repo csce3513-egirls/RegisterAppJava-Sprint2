@@ -3,6 +3,8 @@ package edu.uark.registerapp.controllers;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +32,8 @@ import edu.uark.registerapp.commands.transactions.TransactionQuery;
 import edu.uark.registerapp.commands.transactions.TransactionEntriesQuery;
 import edu.uark.registerapp.commands.transactions.TransactionEntryCreateCommand;
 import edu.uark.registerapp.commands.transactions.TransactionUpdateCommand;
+//TODO: clean up comments(remove the debug stuff)
+
 
 @Controller
 @RequestMapping(value = "/transactionDetail")
@@ -68,11 +72,27 @@ public class TransactionDetailRouteController extends BaseRouteController {
                     ViewModelNames.PRODUCTS.getValue(),
                     (new Product[0]));
             }
-
+            final List<TransactionEntry> transactionEntries;
             try {
+                transactionEntries = this.transactionEntriesQuery.execute();
+
+                //all transactionentris with all 0 transactionIds are current transaction, this removes all others
+                for (int i = 0; i < transactionEntries.size(); i++)
+                {
+                    final String defaultUUID = "00000000-0000-0000-0000-000000000000";
+                    //System.out.println("in the " + i + " loop");
+                    if(!defaultUUID.contentEquals(transactionEntries.get(i).getTransactionId().toString()))
+                    {
+                        //System.out.println("the " + i + " has the " + transactionEntries.get(i).getTransactionId().toString() + "yeet");
+                        //System.out.println("removing " + i + " from the list");
+                        transactionEntries.remove(i);
+                    }
+
+                }
+
                 modelAndView.addObject(
                     ViewModelNames.TRANSACTION_ENTRIES.getValue(),
-                    this.transactionEntriesQuery.execute());
+                    transactionEntries);
             } catch (final Exception e) {
                 modelAndView.addObject(
                     ViewModelNames.ERROR_MESSAGE.getValue(),
@@ -81,6 +101,8 @@ public class TransactionDetailRouteController extends BaseRouteController {
                     ViewModelNames.TRANSACTION_ENTRIES.getValue(),
                     (new TransactionEntry[0]));
             }
+
+
 
             modelAndView.addObject(
                 ViewModelNames.TRANSACTION.getValue(),

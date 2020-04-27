@@ -161,12 +161,55 @@ function deleteActionClick(event) {
 	});
 };
 // End delete
+function completeSaveAction(callbackResponse) {//TODO: Function might //be incomplete
+	if (callbackResponse.data == null) {
+		return;
+	}
 
-// Adding to cart
+	if ((callbackResponse.data.redirectUrl != null)
+		&& (callbackResponse.data.redirectUrl !== "")) {
+
+		window.location.replace(callbackResponse.data.redirectUrl);
+		return;
+    }
+}
+//TODO: clean up console.logs
+ //Adding to cart
 function cartActionClick(event) {
-	// Implement a function that will send the product to the shopping cart
-	// Similar to Save I think.
-	// Waiting on database to be fixed.
+    console.log("cartClicked");
+    const saveActionElement = event.target;
+    const saveActionUrl = ("/api/transactionEntry/");
+    saveActionElement.disabled = true;
+    
+    console.log("made it past initial variables");
+
+    const saveTransactionEntryRequest = {
+        id: "",
+        transactionId: "00000000-0000-0000-0000-000000000000", 
+        productId: getProductId(),
+        quantity: getProductCount(),
+        price: getProductPrice(),
+    };
+
+    console.log(saveTransactionEntryRequest);
+
+    ajaxPost(saveActionUrl, saveTransactionEntryRequest), (callbackResponse) => {
+        console.log("inside callback response");
+        saveActionElement.disabled = false;
+        console.log(callbackResponse);
+        if(isSuccessResponse(callbackResponse))
+        {
+            console.log("saved!, but maybe not really");
+            completeSaveAction(callbackResponse);
+        }
+    }
+
+
+//TODO: why does this window location assignment break the save to the database
+   // window.location.assign(
+   //     "/transactionDetail"
+   // );
+    
 }
 // End adding to cart
 
