@@ -26,7 +26,6 @@ import edu.uark.registerapp.models.api.Transaction;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
 
 // when a variable within an object that is of type /api/transaction is manipulated, the controller maps here
-
 @RestController
 @RequestMapping(value = "/api/transaction")
 public class TransactionRestController extends BaseRestController{

@@ -116,4 +116,12 @@ public class TransactionEntryEntity {
 		this.productId = productId;
 		this.transactionId = transactionId;
 	}
+
+	public TransactionEntryEntity(final TransactionEntry apiTransactionEntry) {
+		this.price = apiTransactionEntry.getPrice();
+		this.id = new UUID(0, 0);
+		this.quantity = apiTransactionEntry.getQuantity();
+		this.productId = apiTransactionEntry.getProductId();
+		this.transactionId = apiTransactionEntry.getTransactionId();
+	}
 }
