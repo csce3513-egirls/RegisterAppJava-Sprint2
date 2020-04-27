@@ -20,24 +20,39 @@ import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.commands.transactions.TransactionDeleteCommand;
+import edu.uark.registerapp.commands.transactions.TransactionEntryCreateCommand;
+import edu.uark.registerapp.commands.transactions.TransactionEntryDeleteCommand;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.api.Transaction;
+import edu.uark.registerapp.models.api.TransactionEntry;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
 
 // when a variable within an object that is of type /api/transaction is manipulated, the controller maps here
 @RestController
-@RequestMapping(value = "/api/transaction")
+@RequestMapping(value = "/api/transactionEntry")
 public class TransactionRestController extends BaseRestController{
-    // method that occurs when a transaction is cancelled
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody ApiResponse cancelTransaction(
-        @PathVariable final UUID transactionId,
-        final HttpServletRequest request
+    // method that occurs when a transactionEntry is created
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+	public @ResponseBody ApiResponse createTransactionEntry(
+		@RequestBody final TransactionEntry transactionEntry,
+		final HttpServletRequest request,
+		final HttpServletResponse response
 	) {
+
+		return this.transactionEntryCreateCommand
+			.setApiTransactionEntry(transactionEntry)
+			.execute();
+	}
+   
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody ApiResponse cancelTransactionEntry(
+        @PathVariable final UUID transactionEntryId,
+        final HttpServletRequest request
+	) { 
         try{
-            this.transactionDeleteCommand.
-                setTransactionId(transactionId).
+            this.transactionEntryDeleteCommand.
+                setId(transactionEntryId).
                 execute();
         }
         catch(Exception e){
@@ -49,10 +64,13 @@ public class TransactionRestController extends BaseRestController{
 	}
 
     @Autowired
-    private TransactionDeleteCommand transactionDeleteCommand;
+    private TransactionEntryDeleteCommand transactionEntryDeleteCommand;
 
     @Autowired
     private ValidateActiveUserCommand validateActiveUserCommand;
+
+    @Autowired
+    private TransactionEntryCreateCommand transactionEntryCreateCommand;
 
     @Autowired
     private TransactionQuery transactionQuery;

@@ -9,7 +9,9 @@ public enum ViewModelNames {
 	EMPLOYEE_ID("employeeId"), // Sign in
 	EMPLOYEE("employee"), // Employee detail
     EMPLOYEE_TYPES("employeeTypes"),
-    TRANSACTION("transaction");
+    TRANSACTION("transaction"),
+    TRANSACTION_ENTRY("transactionEntry"),
+    TRANSACTION_ENTRIES("transactionEntries");
 	
 	public String getValue() {
 		return value;

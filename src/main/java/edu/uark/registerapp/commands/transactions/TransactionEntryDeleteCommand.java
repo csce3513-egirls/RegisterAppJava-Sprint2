@@ -18,19 +18,19 @@ public class TransactionEntryDeleteCommand implements VoidCommandInterface {
     @Override
     public void execute(){
         final Optional<TransactionEntryEntity> transactionEntryEntity =
-            this.transactionEntryRepository.findById(this.getProductId());
+            this.transactionEntryRepository.findById(this.getId());
         if(!transactionEntryEntity.isPresent()){
             throw new NotFoundException("TransactionEntry");
         }
         this.transactionEntryRepository.delete(transactionEntryEntity.get());
     }
 
-    private UUID productId;
-    public UUID getProductId() {
-        return this.productId;
+    private UUID id;
+    public UUID getId() {
+        return this.id;
     }
-    public TransactionEntryDeleteCommand setProductId(final UUID productId) {
-        this.productId = productId;
+    public TransactionEntryDeleteCommand setId(final UUID transactionEntryId) {
+        this.id = transactionEntryId;
         return this;
     }
 

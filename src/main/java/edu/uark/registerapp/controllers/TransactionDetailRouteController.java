@@ -27,6 +27,7 @@ import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.enums.EmployeeClassification;
 import edu.uark.registerapp.commands.products.ProductsQuery;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
+import edu.uark.registerapp.commands.transactions.TransactionEntriesQuery;
 import edu.uark.registerapp.commands.transactions.TransactionUpdateCommand;
 
 @Controller
@@ -57,9 +58,6 @@ public class TransactionDetailRouteController extends BaseRouteController {
                 modelAndView.addObject(
                     ViewModelNames.PRODUCTS.getValue(),
                     this.productsQuery.execute());
-                modelAndView.addObject(
-                        ViewModelNames.TRANSACTION.getValue(),
-                        (new Transaction()));
             } catch (final Exception e) {
                 modelAndView.addObject(
                     ViewModelNames.ERROR_MESSAGE.getValue(),
@@ -68,22 +66,40 @@ public class TransactionDetailRouteController extends BaseRouteController {
                     ViewModelNames.PRODUCTS.getValue(),
                     (new Product[0]));
             }
+
+            try {
+                modelAndView.addObject(
+                    ViewModelNames.TRANSACTION_ENTRIES.getValue(),
+                    this.transactionEntriesQuery.execute());
+            } catch (final Exception e) {
+                modelAndView.addObject(
+                    ViewModelNames.ERROR_MESSAGE.getValue(),
+                    e.getMessage());
+                modelAndView.addObject(
+                    ViewModelNames.TRANSACTION_ENTRIES.getValue(),
+                    (new TransactionEntry[0]));
+            }
+
+            modelAndView.addObject(
+                ViewModelNames.TRANSACTION.getValue(),
+                (new Transaction()));
+            
         return modelAndView;
     }
 
     // method thats executed when a product is added to a transaction
-    @RequestMapping(value = "/{transactionId}", method = RequestMethod.POST)
-    public ModelAndView addToTransaction(
-        @PathVariable final UUID transactionId,
-        TransactionEntry transactionEntry,
-        HttpServletRequest request
-    ) { 
-
-        // TO-DO: upon execution, make sure transactionEntry is saved with correct transaction ID
-        // then redirct back to transaction detail and possibly add any new transaction entry objects to ModelAndView?
-        return new ModelAndView(REDIRECT_PREPEND.concat(
-            ViewNames.TRANSACTION_DETAIL.getRoute()));
-    }
+    //@RequestMapping(value = "/{transactionId}", method = RequestMethod.POST)
+    //public ModelAndView addToTransaction(
+    //    @PathVariable final UUID transactionId,
+    //    TransactionEntry transactionEntry,
+    //    HttpServletRequest request
+    //) { 
+//
+    //    // TO-DO: upon execution, make sure transactionEntry is saved with correct transaction ID
+    //    // then redirct back to transaction detail and possibly add any new transaction entry objects to ModelAndView?
+    //    return new ModelAndView(REDIRECT_PREPEND.concat(
+    //        ViewNames.TRANSACTION_DETAIL.getRoute()));
+    //}
 
 
     @Autowired
@@ -93,5 +109,8 @@ public class TransactionDetailRouteController extends BaseRouteController {
     private TransactionUpdateCommand transactionUpdateCommand;
 
     @Autowired
-	private ProductsQuery productsQuery;
+    private ProductsQuery productsQuery;
+    
+    @Autowired
+    private TransactionEntriesQuery transactionEntriesQuery;
 }

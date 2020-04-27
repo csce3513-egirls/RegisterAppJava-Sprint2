@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import edu.uark.registerapp.models.entities.TransactionEntryEntity;
+
 ///TODO: Maybe add more constructors
 public class TransactionEntry extends ApiResponse {
 
@@ -77,6 +79,17 @@ public class TransactionEntry extends ApiResponse {
         this.quantity = -1.0;
         this.price = -1;
         this.setCreatedOn(LocalDateTime.now());
+    }
+
+    public TransactionEntry(final TransactionEntryEntity transactionEntryEntity) {
+        super(false);
+
+        this.id = transactionEntryEntity.getId();
+        this.transactionId = transactionEntryEntity.getTransactionId();
+        this.productId = transactionEntryEntity.getProductId();
+        this.quantity = transactionEntryEntity.getQuantity();
+        this.price = transactionEntryEntity.getPrice();
+        this.setCreatedOn(transactionEntryEntity.getCreatedOn());
     }
 
 }
