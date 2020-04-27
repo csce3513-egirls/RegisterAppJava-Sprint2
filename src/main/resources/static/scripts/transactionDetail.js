@@ -25,12 +25,45 @@ function findClickedListItemElement(clickedTarget) {
 	}
 }
 
+function completeSaveAction(callbackResponse) {
+	if (callbackResponse.data == null) {
+		return;
+	}
+
+	if ((callbackResponse.data.redirectUrl != null)
+		&& (callbackResponse.data.redirectUrl !== "")) {
+
+		window.location.replace(callbackResponse.data.redirectUrl);
+		return;
+	}
+}
+
 function productClick(event) {
     let listItem = findClickedListItemElement(event.target);
 
-	window.location.assign(
-		"/transactionDetail/"
-		+ listItem.querySelector("input[name='productId'][type='hidden']").value);
+    const saveActionElement = event.target;
+    const saveActionUrl = ("/transactionDetail/createTransactionEntry/"); //TODO: WRONG URL
+    const saveTransactionEntryRequest = {
+        id: "",
+        transactionId: "", //TODO: Verify these values
+        productId: listItem.querySelector("input[name='productId'][type='hidden']").value,
+        quantity: listItem.getElementsByClassName("productQuantity").value,
+        price: listItem.getElementsByClassName(productPriceDisplay).value
+    };
+
+    ajaxPost(saveActionUrl, saveTransactionEntryRequest), (callbackResponse) => {
+        saveActionElement.disabled = false;
+
+        if(isSuccessResponse(callbackResponse))
+        {
+            completeSaveAction(callbackResponse);
+        }
+    }
+
+
+	//window.location.assign(
+	//	"/transactionDetail/createTrasactionEntry/"
+	//	+ listItem.querySelector("input[name='productId'][type='hidden']").value);
 }
 
 //partial search 
