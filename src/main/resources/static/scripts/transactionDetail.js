@@ -73,9 +73,9 @@ function productClick(event) {
 //partial search 
 function search() {
     document.getElementById("dropdown").classList.toggle("show");
-  }
+}
   
-  function filterInput() {
+function filterInput() {
     var input, filter, a, i;
     input = document.getElementById("userInput");
     filter = input.value.toUpperCase();
@@ -90,3 +90,7 @@ function search() {
       }
     }
   }
+
+function findTotals() {
+
+}

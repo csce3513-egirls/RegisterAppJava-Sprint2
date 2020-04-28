@@ -6,6 +6,7 @@
 
 	<link rel="stylesheet" type="text/css" href="/styles/master.css">
 	<link rel="stylesheet" type="text/css" href="/styles/productDetail.css">
+	<link rel="stylesheet" type="text/css" href="/styles/productListing.css">
 
 	<script type="text/javascript" src="/scripts/master.js" defer></script>
 	<script type="text/javascript" src="/scripts/transactionDetail.js" defer></script>
@@ -61,30 +62,36 @@
 			</div>
 		  </div>
 
-		<div class="transactionsActionsWrapper">
-			<br />
-			<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
-			<br /><br />
-			<button id="checkOutButton" type="button" class="action">Check Out</button>
-		</div>
 		<ul  id="transactionListing" class="transaction">
 			<li th:each="transactionEntry : ${transactionEntries}">
 				<span class="transactionEntryTransactionIdDisplay" th:text="${transactionEntry.transactionId}">0</span>
-				<br /><span class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
-				<br /><span class="transactionEntryQuantityDisplay" th:text="${transactionEntry.quantity}">0</span>
-				<br /><span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
-				<br /><span class="transactionEntryCreatedOnDisplay" th:text="${transactionEntry.createdOn}">12/31/1999</span>
+				<br />&nbsp;&nbsp;<span class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
+				<br />&nbsp;&nbsp;<span class="transactionEntryQuantityDisplay" th:text="${transactionEntry.quantity}">0</span>
+				<br />&nbsp;&nbsp;<span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
+				<br />&nbsp;&nbsp;<span class="transactionEntryCreatedOnDisplay" th:text="${transactionEntry.createdOn}">12/31/1999</span>
 				<br> <br>
 				<button id="removeButton" type="button" class="action">Remove</button>
 				<br><br>
 			</li>
 		</ul>
 		<ul id="transactionListing" class="transaction">
-			<td class="label">Total:</td>
+			<td class="label">Total Quantity:</td>
 				<td>
 					<span id="total" type="number" th:text="${transaction.total}" class="update">
 				</td>
 		</li>
+		<ul id="transactionListing" class="transaction">
+			<td class="label">Total Price:</td>
+				<td>
+					<span id="total" type="number" th:text="${transaction.total}" class="update">
+				</td>
+		</li>
+		<div class="transactionsActionsWrapper">
+			<br />
+			<button id="cancelButton" type="button" class="action">Cancel Transaction</button>
+			<br /><br />
+			<button id="checkOutButton" type="button" class="action">Check Out</button>
+		</div>
 	</ul>
 	</div>
 
