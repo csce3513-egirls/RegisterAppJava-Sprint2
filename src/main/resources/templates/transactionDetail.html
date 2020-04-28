@@ -66,10 +66,10 @@
 		<ul  id="transactionListing" class="transaction">
 			<li th:each="transactionEntry : ${transactionEntries}">
 				<span class="transactionEntryTransactionIdDisplay" th:text="${transactionEntry.transactionId}">0</span>
-				<br />&nbsp;&nbsp;<span class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
-				<br />&nbsp;&nbsp;<span class="transactionEntryQuantityDisplay" th:text="${transactionEntry.quantity}">0</span>
-				<br />&nbsp;&nbsp;<span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
-				<br />&nbsp;&nbsp;<span class="transactionEntryCreatedOnDisplay" th:text="${transactionEntry.createdOn}">12/31/1999</span>
+				<br />&nbsp;&nbsp;<span id="transactionProductId" class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
+				<br />&nbsp;&nbsp;<span id="transactionQuantity" class="transactionEntryQuantityDisplay" th:text="${transactionEntry.quantity}">0</span>
+				<br />&nbsp;&nbsp;<span id="transactionPrice" class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
+				<br />&nbsp;&nbsp;<span id="transactionCreatedOn" class="transactionEntryCreatedOnDisplay" th:text="${transactionEntry.createdOn}">12/31/1999</span>
 				<br> <br>
 				<button id="removeButton" type="button" class="action">Remove</button>
 				<br><br>
