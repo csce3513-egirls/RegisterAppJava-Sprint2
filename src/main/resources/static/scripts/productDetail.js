@@ -1,4 +1,5 @@
 let hideProductSavedAlertTimer = undefined;
+let hideProductAddToCartAlertTimer = undefined;
 
 document.addEventListener("DOMContentLoaded", () => {
 	const productLookupCodeElement = getProductLookupCodeElement();
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	getSaveActionElement().addEventListener("click", saveActionClick);
 	getDeleteActionElement().addEventListener("click", deleteActionClick);
-	
+
 	getCartActionElement().addEventListener("click", cartActionClick);
 
 	if (!productLookupCodeElement.disabled) {

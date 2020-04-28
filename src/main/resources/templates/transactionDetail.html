@@ -74,12 +74,15 @@
 				<br /><span class="transactionEntryQuantityDisplay" th:text="${transactionEntry.quantity}">0</span>
 				<br /><span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
 				<br /><span class="transactionEntryCreatedOnDisplay" th:text="${transactionEntry.createdOn}">12/31/1999</span>
+				<br> <br>
+				<button id="removeButton" type="button" class="action">Remove</button>
+				<br><br>
 			</li>
 		</ul>
 		<ul id="transactionListing" class="transaction">
 			<td class="label">Total:</td>
 				<td>
-					<input id="total" type="number" th:value="${transaction.total}" class="update"/>
+					<span id="total" type="number" th:text="${transaction.total}" class="update">
 				</td>
 		</li>
 	</ul>
