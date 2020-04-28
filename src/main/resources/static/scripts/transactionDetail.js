@@ -20,6 +20,16 @@ function removeTransactionProductClick(element){
     var x = element.parentElement.parentElement
     var entryID = x.children[0].textContent;
     console.log(entryID);
+
+    const deleteActionUrl = ("api/transaction/" + entryID);
+
+
+	ajaxDelete(deleteActionUrl, (callbackResponse) => {
+
+		if (isSuccessResponse(callbackResponse)) {
+			window.location.replace("/transactionDetail");
+		}
+	});
 }
 
 function findClickedListItemElement(clickedTarget) {

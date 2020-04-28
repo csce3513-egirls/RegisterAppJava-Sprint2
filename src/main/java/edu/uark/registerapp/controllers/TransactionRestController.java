@@ -104,6 +104,25 @@ public class TransactionRestController extends BaseRestController{
         }
 		return (new ApiResponse())
             .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+    }
+    
+    @RequestMapping(value="/{entryID}", method = RequestMethod.DELETE)
+	public @ResponseBody ApiResponse removeFromCart(
+        @PathVariable final UUID entryID,
+        final HttpServletRequest request,
+        final HttpServletResponse response
+	) { 
+        try{
+            this.transactionEntryDeleteCommand.setId(entryID)
+            .setDeleteBy(TransactionEntryDeleteBy.ID)
+            .execute();
+        }
+        catch(Exception e){
+            return (new ApiResponse())
+			.setRedirectUrl(ViewNames.TRANSACTION_DETAIL.getRoute());
+        }
+		return (new ApiResponse())
+            .setRedirectUrl(ViewNames.TRANSACTION_DETAIL.getRoute());
 	}
 
     @Autowired
