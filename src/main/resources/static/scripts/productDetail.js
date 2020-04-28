@@ -225,10 +225,7 @@ function cartActionClick(event) {
 	
 		getAddToCartAlertModalElement().style.display = "none";
 	}
-//TODO: why does this window location assignment break the save to the database
-   // window.location.assign(
-   //     "/transactionDetail"
-   // );
+
     
 }
 // End adding to cart

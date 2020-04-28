@@ -64,6 +64,9 @@ function finishTransactionClick(event) {
 
             }
         }
+        window.location.assign(
+            "/mainMenu"
+        );
     });
 }
 
@@ -83,6 +86,7 @@ function cancelTransactionClick(event) {
 
             }
         }
+        window.location.reload();
     });
 }
 
