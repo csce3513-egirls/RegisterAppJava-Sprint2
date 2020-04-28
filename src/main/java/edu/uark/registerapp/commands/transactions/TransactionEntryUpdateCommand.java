@@ -18,9 +18,9 @@ public class TransactionEntryUpdateCommand implements ResultCommandInterface<Tra
 	@Transactional
 	@Override
 	public TransactionEntry execute() {
-
+        //TODO:Untested code
 		final Optional<TransactionEntryEntity> transactionEntryEntity =
-			this.transactionEntryRepository.findById(this.productId); 
+			this.transactionEntryRepository.findById(this.id); 
 		if (!transactionEntryEntity.isPresent()) { // No record with the associated record ID exists in the database.
 			throw new NotFoundException("TransactionEntry");
 		}
@@ -34,7 +34,15 @@ public class TransactionEntryUpdateCommand implements ResultCommandInterface<Tra
 		return this.apiTransactionEntry;
 	}
 
-	// Properties
+    // Properties
+    private UUID id;
+	public UUID getId() {
+		return this.id;
+	}
+	public TransactionEntryUpdateCommand setId(final UUID id) {
+		this.id = id;
+		return this;
+    }
 	private UUID transactionId;
 	public UUID getTransactionId() {
 		return this.transactionId;

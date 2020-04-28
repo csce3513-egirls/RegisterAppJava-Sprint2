@@ -2,6 +2,7 @@ package edu.uark.registerapp.controllers;
 
 import java.util.UUID;
 import java.util.Optional;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,18 +16,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.uark.registerapp.commands.employees.ActiveEmployeeExistsQuery;
 import edu.uark.registerapp.commands.activeUsers.ValidateActiveUserCommand;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.controllers.enums.TransactionEntryDeleteBy;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.commands.transactions.TransactionDeleteCommand;
+import edu.uark.registerapp.commands.transactions.TransactionCreateCommand;
 import edu.uark.registerapp.commands.transactions.TransactionEntryCreateCommand;
 import edu.uark.registerapp.commands.transactions.TransactionEntryDeleteCommand;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.entities.TransactionEntity;
 import edu.uark.registerapp.models.api.Transaction;
 import edu.uark.registerapp.models.api.TransactionEntry;
+import edu.uark.registerapp.commands.transactions.TransactionEntriesQuery;
 import edu.uark.registerapp.commands.transactions.TransactionQuery;
 
 // when a variable within an object that is of type /api/transaction is manipulated, the controller maps here
@@ -47,33 +51,38 @@ public class TransactionRestController extends BaseRestController{
     }
     @RequestMapping(value="/finishTransaction", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse finishTransaction(
-        final HttpServletRequest request
+        final HttpServletRequest request,
+        final HttpServletResponse response
 	) { 
+        
         try{
-            UUID deleteUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+            final ActiveUserEntity activeUserEntity =
+                this.validateActiveUserCommand
+                    .setSessionKey(request.getSession().getId())
+                    .execute();
 
-            this.transactionEntryDeleteCommand.
-                setTransactionId(deleteUUID).
-                setDeleteBy(TransactionEntryDeleteBy.TRANSACTION_ID).
+    
+            if (activeUserEntity == null) {
+                return this.redirectSessionNotActive(response);
+            }
+
+            this.transactionCreateCommand.
+                setEmployeeId(activeUserEntity.getEmployeeId()).
                 execute();
+    
+                
+            }
+            catch(Exception e){
+                System.out.println("There was an exception! " + e);
+                return (new ApiResponse())
+                .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+            }
 
-            
-        }
-        catch(Exception e){
-            System.out.println("There was an exception! " + e);
-            return (new ApiResponse())
-			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
-        }
+
+        
 		return (new ApiResponse())
 			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
 	}
-
-
-
-
-
-
-
 
 
 
@@ -89,6 +98,7 @@ public class TransactionRestController extends BaseRestController{
 
             this.transactionEntryDeleteCommand.
                 setTransactionId(deleteUUID).
+                setDeleteBy(TransactionEntryDeleteBy.TRANSACTION_ID).
                 execute();
         }
         catch(Exception e){
@@ -96,8 +106,30 @@ public class TransactionRestController extends BaseRestController{
 			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
         }
 		return (new ApiResponse())
-			.setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+            .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+            
+        //TODO: code below should be identical to the stuff above, TEST THE CODE ABOVE
+        //    try{
+        //        UUID deleteUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+    //
+        //        this.transactionEntryDeleteCommand.
+        //            setTransactionId(deleteUUID).
+        //            setDeleteBy(TransactionEntryDeleteBy.TRANSACTION_ID).
+        //            execute();
+    //
+        //        
+        //    }
+        //    catch(Exception e){
+        //        System.out.println("There was an exception! " + e);
+        //        return (new ApiResponse())
+        //        .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
+        //    }
+        //    return (new ApiResponse())
+        //        .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
 	}
+
+    @Autowired
+    private TransactionEntriesQuery transactionEntriesQuery;
 
     @Autowired
     private TransactionEntryDeleteCommand transactionEntryDeleteCommand;
@@ -109,5 +141,11 @@ public class TransactionRestController extends BaseRestController{
     private TransactionEntryCreateCommand transactionEntryCreateCommand;
 
     @Autowired
+    private TransactionCreateCommand transactionCreateCommand;
+
+    @Autowired
     private TransactionQuery transactionQuery;
+
+    @Autowired
+    private ActiveEmployeeExistsQuery activeEmployeeExistsQuery;
 }

@@ -75,24 +75,24 @@ public class TransactionDetailRouteController extends BaseRouteController {
             final List<TransactionEntry> transactionEntries;
             try {
                 transactionEntries = this.transactionEntriesQuery.execute();
-
+                final List<TransactionEntry> actualTransactionEntries = new LinkedList<>();
                 //all transactionentris with all 0 transactionIds are current transaction, this removes all others
                 for (int i = 0; i < transactionEntries.size(); i++)
                 {
-                    final String defaultUUID = "00000000-0000-0000-0000-000000000000";
+                    UUID defaultUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
                     //System.out.println("in the " + i + " loop");
-                    if(!defaultUUID.contentEquals(transactionEntries.get(i).getTransactionId().toString()))
+                    if(defaultUUID.equals(transactionEntries.get(i).getTransactionId()))
                     {
                         //System.out.println("the " + i + " has the " + transactionEntries.get(i).getTransactionId().toString() + "yeet");
                         //System.out.println("removing " + i + " from the list");
-                        transactionEntries.remove(i);
+                        actualTransactionEntries.add(transactionEntries.get(i));
                     }
 
                 }
 
                 modelAndView.addObject(
                     ViewModelNames.TRANSACTION_ENTRIES.getValue(),
-                    transactionEntries);
+                    actualTransactionEntries);
             } catch (final Exception e) {
                 modelAndView.addObject(
                     ViewModelNames.ERROR_MESSAGE.getValue(),

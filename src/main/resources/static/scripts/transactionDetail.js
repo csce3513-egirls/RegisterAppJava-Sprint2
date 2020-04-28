@@ -44,7 +44,7 @@ function completeSaveAction(callbackResponse) {
 
 function finishTransactionClick(event) {
     let finishTransactionElement = event.target;
-
+    
     const finishActionUrl = ("api/transaction/finishTransaction");
     const finishActionRequest = null;
 
