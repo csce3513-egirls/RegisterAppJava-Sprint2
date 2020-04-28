@@ -1,3 +1,6 @@
+const totalPrice = 0;
+const totalQuantity = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("transactionListing").children;
     const finishTransactionButton = document.getElementById("checkOutButton");
@@ -5,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	for (let i = 0; i < productListElements.length; i++) {
     productListElements[i].addEventListener("click", productClick);
-    }
+  }
     
     finishTransactionButton.addEventListener("click", finishTransactionClick);
 
@@ -118,3 +121,32 @@ function filterInput() {
 function findTotals() {
 
 }
+
+//Getters
+function getTransactionQuantity() {
+	return Number(getTransactiontQuantityElement().value);
+}
+function getTransactionQuantityElement() {
+	return document.getElementById("transactionQuantity");
+}
+
+function getTransactionPrice() {
+	return Number(getTransactionPriceElement().value);
+}
+function getTransactionPriceElement() {
+	return document.getElementById("transactionPrice");
+}
+
+/*function getTotalQuantity() {
+	return Number(getTotalQuantityElement().value);
+}
+function getTotalQuantityElement() {
+	return document.getElementById("totalQuantity");
+}
+
+function getTotalPrice() {
+	return Number(getTotalPriceElement().value);
+}
+function getTotalPriceElement() {
+	return document.getElementById("totalPrice");
+}*/
