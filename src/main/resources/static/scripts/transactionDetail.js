@@ -1,12 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("transactionListing").children;
     const finishTransactionButton = document.getElementById("checkOutButton");
+    const cancelTransactionButton = document.getElementById("cancelButton");
 
 	for (let i = 0; i < productListElements.length; i++) {
     productListElements[i].addEventListener("click", productClick);
     }
     
     finishTransactionButton.addEventListener("click", finishTransactionClick);
+
+    cancelTransactionButton.addEventListener("click", cancelTransactionClick);
+
 
 });
 
@@ -61,6 +65,26 @@ function finishTransactionClick(event) {
         }
     });
 }
+
+function cancelTransactionClick(event) {
+    let cancelTransactionElement = event.target;
+    
+    const finishActionUrl = ("api/transaction/cancelTransaction");
+
+    ajaxDelete(finishActionUrl, (callbackResponse) => {
+        finishTransactionElement.disabled = false;
+
+        if (isSuccessResponse(callbackResponse)) {
+
+            if ((callbackResponse.data != null)
+                && (callbackResponse.data.id != null)
+                && (callbackResponse.data.id.trim() !== "")) {
+
+            }
+        }
+    });
+}
+
 
 function productClick(event) {
 	let listItem = findClickedListItemElement(event.target);

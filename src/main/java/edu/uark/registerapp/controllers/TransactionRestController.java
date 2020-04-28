@@ -85,9 +85,6 @@ public class TransactionRestController extends BaseRestController{
 	}
 
 
-
-
-
    //TODO: FINISH THE FUNCTION BELOW
     @RequestMapping(value="/cancelTransaction", method = RequestMethod.DELETE)
 	public @ResponseBody ApiResponse cancelTransaction(
@@ -107,25 +104,6 @@ public class TransactionRestController extends BaseRestController{
         }
 		return (new ApiResponse())
             .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
-            
-        //TODO: code below should be identical to the stuff above, TEST THE CODE ABOVE
-        //    try{
-        //        UUID deleteUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
-    //
-        //        this.transactionEntryDeleteCommand.
-        //            setTransactionId(deleteUUID).
-        //            setDeleteBy(TransactionEntryDeleteBy.TRANSACTION_ID).
-        //            execute();
-    //
-        //        
-        //    }
-        //    catch(Exception e){
-        //        System.out.println("There was an exception! " + e);
-        //        return (new ApiResponse())
-        //        .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
-        //    }
-        //    return (new ApiResponse())
-        //        .setRedirectUrl(ViewNames.MAIN_MENU.getRoute());
 	}
 
     @Autowired
