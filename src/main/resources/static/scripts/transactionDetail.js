@@ -3,7 +3,6 @@ const totalQuantity = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("productListing").children;
-    const transactionEntryListElements = document.getElementById("transactionEntryListing").children;
     const finishTransactionButton = document.getElementById("checkOutButton");
     const cancelTransactionButton = document.getElementById("cancelButton");
 
@@ -70,11 +69,11 @@ function finishTransactionClick(event) {
 
 function cancelTransactionClick(event) {
     let cancelTransactionElement = event.target;
-    
-    const finishActionUrl = ("api/transaction/cancelTransaction");
+    console.log("in cancel transaction");
+    const cancelActionUrl = ("api/transaction/cancelTransaction");
 
-    ajaxDelete(finishActionUrl, (callbackResponse) => {
-        finishTransactionElement.disabled = false;
+    ajaxDelete(cancelActionUrl, (callbackResponse) => {
+        cancelTransactionElement.disabled = false;
 
         if (isSuccessResponse(callbackResponse)) {
 
