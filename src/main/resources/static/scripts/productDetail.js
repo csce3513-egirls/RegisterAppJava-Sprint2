@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	getSaveActionElement().addEventListener("click", saveActionClick);
 	getDeleteActionElement().addEventListener("click", deleteActionClick);
-
+	
 	getCartActionElement().addEventListener("click", cartActionClick);
 
 	if (!productLookupCodeElement.disabled) {
@@ -200,11 +200,30 @@ function cartActionClick(event) {
         if(isSuccessResponse(callbackResponse))
         {
             console.log("saved!, but maybe not really");
-            completeSaveAction(callbackResponse);
+			completeSaveAction(callbackResponse);
+			displayProductAddToCartAlertModal();
         }
     }
 
-
+	function displayProductAddToCartAlertModal() {
+		if (hideProductAddToCartAlertTimer) {
+			clearTimeout(hideProductAddToCartAlertTimer);
+		}
+	
+		const addToCartAlertModalElement = getAddToCartAlertModalElement();
+		addToCartAlertModalElement.style.display = "none";
+		addToCartAlertModalElement.style.display = "block";
+	
+		hideProductAddToCartAlertTimer = setTimeout(hideProductAddToCartAlertModal, 1200);
+	}
+	
+	function hideProductAddToCartAlertModal() {
+		if (hideProductAddToCartAlertTimer) {
+			clearTimeout(hideProductAddToCartAlertTimer);
+		}
+	
+		getAddToCartAlertModalElement().style.display = "none";
+	}
 //TODO: why does this window location assignment break the save to the database
    // window.location.assign(
    //     "/transactionDetail"
@@ -228,6 +247,10 @@ function getDeleteActionElement() {
 
 function getCartActionElement() {
 	return document.getElementById("cartButton");
+}
+
+function getAddToCartAlertModalElement() {
+	return document.getElementById("productAddToCartAlertModal");
 }
 
 function getProductId() {
