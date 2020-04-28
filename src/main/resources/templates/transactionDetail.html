@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
 	<link rel="stylesheet" type="text/css" href="/styles/master.css">
-	<link rel="stylesheet" type="text/css" href="/styles/productDetail.css">
+	<link rel="stylesheet" type="text/css" href="/styles/transactionDetail.css">
 	<link rel="stylesheet" type="text/css" href="/styles/productListing.css">
 
 	<script type="text/javascript" src="/scripts/master.js" defer></script>
@@ -45,7 +45,7 @@
 		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
-
+	<div class="transactionWrapper">
 		<div class="dropdown">
 			<button onclick="search()" type="button" class="action">Search Lookup Code</button>
 			<div id="dropdown" class="dropdown-content">
@@ -68,7 +68,7 @@
 				<br />Product ID: <span class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
 				<br />Quantity: <input class="transactionEntryQuantityDisplay" th:value="${transactionEntry.quantity}"></span>
 				<br />Price: <span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
-				<br> <br>
+				<br>
 				<button id="removeButton" type="button" class="action">Remove</button>
 				<br><br>
 			</li>
@@ -91,6 +91,7 @@
 			<br /><br />
 			<button id="checkOutButton" type="button" class="action">Check Out</button>
 		</div>
+	</div>
 	</ul>
 	</div>
 
