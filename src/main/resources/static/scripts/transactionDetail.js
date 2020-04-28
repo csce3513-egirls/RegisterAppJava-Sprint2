@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const productListElements = document.getElementById("transactionListing").children;
+    const productListElements = document.getElementById("productListing").children;
+    const transactionEntryListElements = document.getElementById("transactionEntryListing").children;
     const finishTransactionButton = document.getElementById("checkOutButton");
     const cancelTransactionButton = document.getElementById("cancelButton");
 
 	for (let i = 0; i < productListElements.length; i++) {
-    productListElements[i].addEventListener("click", productClick);
+        productListElements[i].addEventListener("click", productClick);
     }
+
+    entryQuantityElement.addEventListener("keypress", entryQuantityKeypress);
     
     finishTransactionButton.addEventListener("click", finishTransactionClick);
 
     cancelTransactionButton.addEventListener("click", cancelTransactionClick);
-
 
 });
 
@@ -32,7 +34,6 @@ function findClickedListItemElement(clickedTarget) {
 		return (ancestorIsListItem ? ancestorElement : null);
 	}
 }
-
 function completeSaveAction(callbackResponse) {
 	if (callbackResponse.data == null) {
 		return;
