@@ -73,6 +73,8 @@ public class TransactionDetailRouteController extends BaseRouteController {
                     (new Product[0]));
             }
             final List<TransactionEntry> transactionEntries;
+            long totalPrice = 0L;
+            double totalQuantity = 0.0;
             try {
                 transactionEntries = this.transactionEntriesQuery.execute();
                 final List<TransactionEntry> actualTransactionEntries = new LinkedList<>();
@@ -86,10 +88,13 @@ public class TransactionDetailRouteController extends BaseRouteController {
                         //System.out.println("the " + i + " has the " + transactionEntries.get(i).getTransactionId().toString() + "yeet");
                         //System.out.println("removing " + i + " from the list");
                         actualTransactionEntries.add(transactionEntries.get(i));
+                        totalPrice += (transactionEntries.get(i).getPrice() * transactionEntries.get(i).getQuantity());
+                        totalQuantity += transactionEntries.get(i).getQuantity();
                     }
 
                 }
-
+                modelAndView.addObject("totalPrice", totalPrice);
+                modelAndView.addObject("totalQuantity", totalQuantity);
                 modelAndView.addObject(
                     ViewModelNames.TRANSACTION_ENTRIES.getValue(),
                     actualTransactionEntries);
