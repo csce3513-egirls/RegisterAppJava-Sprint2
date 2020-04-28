@@ -88,7 +88,7 @@ function handleFailureResponse(httpRequest, callback) {
 		return;
 	}
 
-	//let errorMessage = "Unable to complete the requested action.";
+	let errorMessage = "Unable to complete the requested action.";
 
 	if ((httpRequest.responseText != null)
 		&& (httpRequest.responseText !== "")) {
