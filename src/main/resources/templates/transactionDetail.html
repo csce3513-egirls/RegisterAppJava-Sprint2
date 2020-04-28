@@ -65,11 +65,14 @@
 
 		<ul  id="transactionListing" class="transaction">
 			<li th:each="transactionEntry : ${transactionEntries}">
+				<span hidden class="transactionEntryIdDisplay" name="IDS" th:text="${transactionEntry.Id}">0</span>
 				<br />Product ID: <span class="transactionEntryProductIdDisplay" th:text="${transactionEntry.productId}">0</span>
 				<br />Quantity: <input class="transactionEntryQuantityDisplay" th:value="${transactionEntry.quantity}"></span>
 				<br />Price: <span class="transactionEntryPriceDisplay" th:text="${transactionEntry.price}">0</span>
 				<br>
-				<button id="removeButton" type="button" class="action">Remove</button>
+				<div>
+					<button id="removeButton" type="button" class="action" onclick="removeTransactionProductClick(this)">Remove</button>
+				</div>
 				<br><br>
 			</li>
 		</ul>

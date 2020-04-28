@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("productListing").children;
     const finishTransactionButton = document.getElementById("checkOutButton");
     const cancelTransactionButton = document.getElementById("cancelButton");
-    const removeTransactionProductButton = document.getElementById("removeButton");
 
 	for (let i = 0; i < productListElements.length; i++) {
     productListElements[i].addEventListener("click", productClick);
@@ -15,9 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cancelTransactionButton.addEventListener("click", cancelTransactionClick);
 
-    removeTransactionProductButton.addEventListener("click", removeTransactionProductClick);
-
 });
+
+function removeTransactionProductClick(element){
+    var x = element.parentElement.parentElement
+    var entryID = x.children[0].textContent;
+    console.log(entryID);
+}
 
 function findClickedListItemElement(clickedTarget) {
 	if (clickedTarget.tagName.toLowerCase() === "li") {
@@ -75,7 +78,6 @@ function finishTransactionClick(event) {
 
 function cancelTransactionClick(event) {
     let cancelTransactionElement = event.target;
-    console.log("in cancel transaction");
     const cancelActionUrl = ("api/transaction/cancelTransaction");
 
     ajaxDelete(cancelActionUrl, (callbackResponse) => {
@@ -93,9 +95,6 @@ function cancelTransactionClick(event) {
     });
 }
 
-function removeTransactionProductClick(event) {
-  console.log("remove button!!!!!!!!!")
-}
 
 
 function productClick(event) {
