@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("productListing").children;
     const finishTransactionButton = document.getElementById("checkOutButton");
     const cancelTransactionButton = document.getElementById("cancelButton");
+    const removeTransactionProductButton = document.getElementById("removeButton");
 
 	for (let i = 0; i < productListElements.length; i++) {
     productListElements[i].addEventListener("click", productClick);
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     finishTransactionButton.addEventListener("click", finishTransactionClick);
 
     cancelTransactionButton.addEventListener("click", cancelTransactionClick);
+
+    removeTransactionProductButton.addEventListener("click", removeTransactionProductClick);
 
 });
 
@@ -84,6 +87,10 @@ function cancelTransactionClick(event) {
             }
         }
     });
+}
+
+function removeTransactionProductClick(event) {
+  console.log("remove button!!!!!!!!!")
 }
 
 
