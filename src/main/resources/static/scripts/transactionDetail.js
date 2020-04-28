@@ -1,3 +1,6 @@
+const totalPrice = 0;
+const totalQuantity = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
     const productListElements = document.getElementById("productListing").children;
     const transactionEntryListElements = document.getElementById("transactionEntryListing").children;
@@ -5,10 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const cancelTransactionButton = document.getElementById("cancelButton");
 
 	for (let i = 0; i < productListElements.length; i++) {
-        productListElements[i].addEventListener("click", productClick);
-    }
-
-    entryQuantityElement.addEventListener("keypress", entryQuantityKeypress);
+    productListElements[i].addEventListener("click", productClick);
+  }
     
     finishTransactionButton.addEventListener("click", finishTransactionClick);
 
@@ -98,9 +99,9 @@ function productClick(event) {
 //partial search 
 function search() {
     document.getElementById("dropdown").classList.toggle("show");
-  }
+}
   
-  function filterInput() {
+function filterInput() {
     var input, filter, a, i;
     input = document.getElementById("userInput");
     filter = input.value.toUpperCase();
@@ -115,3 +116,36 @@ function search() {
       }
     }
   }
+
+function findTotals() {
+
+}
+
+//Getters
+function getTransactionQuantity() {
+	return Number(getTransactiontQuantityElement().value);
+}
+function getTransactionQuantityElement() {
+	return document.getElementById("transactionQuantity");
+}
+
+function getTransactionPrice() {
+	return Number(getTransactionPriceElement().value);
+}
+function getTransactionPriceElement() {
+	return document.getElementById("transactionPrice");
+}
+
+/*function getTotalQuantity() {
+	return Number(getTotalQuantityElement().value);
+}
+function getTotalQuantityElement() {
+	return document.getElementById("totalQuantity");
+}
+
+function getTotalPrice() {
+	return Number(getTotalPriceElement().value);
+}
+function getTotalPriceElement() {
+	return document.getElementById("totalPrice");
+}*/

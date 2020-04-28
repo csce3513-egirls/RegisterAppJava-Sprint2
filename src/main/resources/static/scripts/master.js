@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (shoppingCartActionElement != null) {
 		shoppingCartActionElement.addEventListener("click", shoppingCartActionClickHandler);
 	}
+
+	const mainMenuActionElement = getMainMenuActionElement();
+	if (mainMenuActionElement != null) {
+		mainMenuActionElement.addEventListener("click", mainMenuActionClickHandler);
+	}
 });
 
 // AJAX
@@ -178,6 +183,10 @@ function getShoppingCartActionElement() {
 	return document.getElementById("shoppingCartImage");
 }
 
+function getMainMenuActionElement() {
+	return document.getElementById("homePageImage");
+}
+
 function getErrorMessageContainerElement() {
 	return document.getElementById("error");
 }
@@ -216,3 +225,18 @@ function shoppingCartActionClickHandler() {
 	});
 }
 //End shopping cart
+
+//Main menu
+function mainMenuActionClickHandler() {
+	ajaxGet("/api/homePage", (callbackResponse) => {
+		if ((callbackResponse.data != null)
+			&& (callbackResponse.data.redirectUrl != null)
+			&& (callbackResponse.data.redirectUrl !== "")) {
+	
+			window.location.replace(callbackResponse.data.redirectUrl);
+		} else {
+			window.location.replace("/mainMenu");
+		}
+	});
+}
+//End main menu
